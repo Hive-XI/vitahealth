@@ -11,7 +11,7 @@ export function Caregiver() {
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Caregiver view</h1>
       <p className="text-sm font-medium text-white/90">
-        Supporting {profile.name}. Adherence and flags only — not the full file.
+        Supporting {profile.name}. Adherence and flags so you can help.
       </p>
       <Card>
         <p className="text-sm text-muted">Linked patient adherence</p>

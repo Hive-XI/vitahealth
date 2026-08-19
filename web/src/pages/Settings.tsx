@@ -53,7 +53,7 @@ export function Settings() {
         <Field
           id="set-caregiver"
           label="Invited caregiver"
-          hint="Missed doses and flagged labs only."
+          hint="They see missed doses and flagged labs."
         >
           <input
             id="set-caregiver"

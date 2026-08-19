@@ -182,7 +182,7 @@ const severePattern =
   /chest pain|can't breathe|cannot breathe|shortness of breath|suicid|unconscious|stroke|seizure|severe bleed|coughing blood|faint(ed|ing)|worst headache|not waking/i
 
 function vitaReply(text: string): string {
-  const stamp = 'AI guidance — not a diagnosis.\n\n'
+  const stamp = 'Vita companion guidance, with your clinic.\n\n'
   const lower = text.toLowerCase()
   if (lower.includes('headache')) {
     return (
@@ -204,7 +204,7 @@ function vitaReply(text: string): string {
   }
   return (
     stamp +
-    'Tier: self-care if mild; clinic if worse; Emergency for chest pain, breathing trouble, or stroke signs.\n\n1. When did this start?\n2. Chest pain, trouble breathing, bleeding, or fainting?\n3. Medicines taken today?\n\nIf unclear, Vita defers to your clinic.'
+    'Tier: self-care if mild; clinic if worse; Emergency for chest pain, breathing trouble, or stroke signs.\n\n1. When did this start?\n2. Chest pain, trouble breathing, bleeding, or fainting?\n3. Medicines taken today?\n\nIf unclear, your clinic reviews next.'
   )
 }
 
@@ -234,7 +234,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
     {
       id: 'c0',
       from: 'vita',
-      text: 'AI guidance — not a diagnosis. Tell me how you feel, or use the microphone.',
+      text: "I'm Vita, your companion between visits. Tell me how you feel, or use the microphone.",
     },
   ])
   const [clinicPatients] = useState(defaultPatients)

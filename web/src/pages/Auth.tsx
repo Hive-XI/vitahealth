@@ -67,7 +67,7 @@ export function Auth() {
             <ClinicianPhoto className="h-full min-h-80 w-full" />
           </div>
           <p className="relative mt-6 hidden text-sm text-muted lg:block">
-            Not a diagnosis
+            Care between visits
           </p>
         </aside>
 
@@ -156,7 +156,7 @@ export function Auth() {
             </Card>
           </div>
           <p className="mt-8 text-center text-sm text-muted lg:hidden">
-            Not a diagnosis
+            Care between visits
           </p>
         </section>
       </div>

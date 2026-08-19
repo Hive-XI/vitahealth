@@ -32,7 +32,7 @@ export function SymptomChat() {
     <div className="flex min-h-[70vh] flex-col">
       <h1 className="font-display text-3xl font-bold">Symptom guidance</h1>
       <p className="text-sm font-medium text-white/90">
-        AI replies. Not a diagnosis. Use Emergency for severe symptoms.
+        AI guidance between visits. For severe symptoms, use Emergency.
       </p>
       <ol className="mt-4 flex flex-1 flex-col gap-3">
         {messages.map((message) => (

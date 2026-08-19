@@ -17,7 +17,7 @@ const features = [
   {
     icon: MessageCircle,
     title: 'Symptom guidance',
-    body: 'Text or voice. Self-care, see a clinician, or emergency — never a diagnosis.',
+    body: 'Text or voice. Self-care, clinic review, or emergency — with your care team.',
   },
   {
     icon: Pill,
@@ -71,8 +71,8 @@ export function Landing() {
               Support between visits
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg font-medium text-white/90 md:mx-0">
-              Guidance, reminders, and lab explainers for patients. Risk flags
-              for partner clinics. Not a diagnosis.
+              Guidance, reminders, and lab explainers between visits. Partner
+              clinics see who needs them first.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
               <ButtonLink to="/login">Get started</ButtonLink>
@@ -91,7 +91,7 @@ export function Landing() {
             ) : null}
             <p className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-white/90 md:justify-start">
               <ShieldCheck className="size-4 text-white" aria-hidden />
-              Decision-support only. Emergencies skip the chat.
+              Daily care with partner clinics. Emergencies: call 112.
             </p>
           </div>
           <ClinicianFrame />
@@ -132,8 +132,8 @@ export function Landing() {
                 See who needs you first
               </h2>
               <p className="mt-4 font-medium text-white/90">
-                Adherence, last check-in, and an urgency queue — not every
-                record.
+                Adherence, last check-in, and an urgency queue so you can act
+                first.
               </p>
               <ButtonLink to="/login" variant="outline" className="mt-8">
                 Open clinic preview
@@ -178,7 +178,7 @@ export function Landing() {
       </main>
 
       <footer className="relative z-10 border-t border-white/15 px-4 py-8 text-center text-sm font-medium text-white/80">
-        Vita Health · Not a diagnostic service
+        Vita Health · Patient companion for partner clinics
       </footer>
     </div>
     </div>

@@ -12,7 +12,7 @@ export function Emergency() {
           Get help now
         </h1>
         <p className="mt-3 font-medium text-white/90">
-          Vita will not handle this. Call 112, then your clinic or caregiver.
+          Call 112 now, then your clinic or caregiver.
         </p>
       </Card>
       <a

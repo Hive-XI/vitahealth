@@ -75,7 +75,7 @@ export function ProfileSetup() {
         <Field
           id="caregiver"
           label="Invite a caregiver (optional)"
-          hint="Adherence and flags only."
+          hint="They see adherence and flags."
         >
           <input
             id="caregiver"

@@ -26,20 +26,20 @@ export function Consent() {
         </header>
         <main id="main" className="bg-[#f4f1ea] px-4 py-8 lg:bg-transparent lg:py-10">
           <h1 className="font-display text-4xl font-bold">
-            Disclaimer and consent
+            How Vita supports you
           </h1>
           <p className="mt-2 font-medium text-muted lg:text-white/90">
-            Decision-support only. Not a diagnosis or prescription.
+            Your companion between visits. Guidance sits with your clinic.
           </p>
 
           <div className="ticket mt-6">
             <Card>
               <h2 className="font-display text-lg font-semibold">
-                AI is not a diagnosis
+                AI guidance with your clinic
               </h2>
               <p className="mt-2 text-muted">
                 Replies are labelled AI. Unclear cases go to your clinic. Chest
-                pain, breathing trouble, or stroke signs skip chat.
+                pain, breathing trouble, or stroke signs: call 112.
               </p>
               <label className="mt-4 flex min-h-11 cursor-pointer items-start gap-3 text-sm font-medium">
                 <input
@@ -48,8 +48,8 @@ export function Consent() {
                   checked={ai}
                   onChange={(event) => setAi(event.target.checked)}
                 />
-                I understand Vita does not diagnose, prescribe, or replace
-                emergency care.
+                I understand Vita guides me with my clinic, and I will use
+                emergency services for severe symptoms.
               </label>
             </Card>
           </div>

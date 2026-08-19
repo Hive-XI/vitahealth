@@ -64,7 +64,7 @@ export function Meds() {
         <h2 className="font-display text-lg font-semibold">History</h2>
         <p className="mt-2 text-sm text-muted">
           This week: {percent}%. Three missed doses in a row flag the clinic.
-          Vita does not change prescribed doses.
+          Doses stay as your clinician prescribed.
         </p>
       </Card>
     </div>

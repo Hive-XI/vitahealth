@@ -37,7 +37,7 @@ export function Labs() {
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Lab results</h1>
       <p className="text-sm font-medium text-white/90">
-        Use the range on your report. Out of range is flagged — not diagnosed.
+        Use the range on your report. Out of range is flagged for clinic review.
       </p>
       <form onSubmit={save}>
         <Card className="grid gap-3">

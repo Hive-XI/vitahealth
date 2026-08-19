@@ -24,7 +24,7 @@ export function BookFollowUp() {
     <form onSubmit={confirm} className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Book follow-up</h1>
       <p className="text-sm font-medium text-white/90">
-        A result sat outside the report range. Vita does not choose treatment.
+        A result sat outside the report range. Your clinician chooses next steps.
       </p>
       <Card className="grid gap-4">
         <Field id="clinic" label="Preferred clinic">

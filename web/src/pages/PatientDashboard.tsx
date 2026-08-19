@@ -57,7 +57,7 @@ export function PatientDashboard() {
           <p className="mt-2 text-sm text-muted">
             {flagged[0].value}
             {flagged[0].unit} is above the report range ({flagged[0].range}).
-            Not a diagnosis — book a review.
+            Book a clinic review.
           </p>
           <Link
             to="/app/labs/follow-up"
