@@ -1,0 +1,17 @@
+# App source is in web/ (Vite + React). Without this, Netlify deploys the
+# repo root (README only) and shows its branded "Page not found" 404.
+
+[build]
+  base = "web"
+  command = "npm run build"
+  # Relative to base, so this publishes web/dist
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA fallback for React Router. Deep links 404 without this.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
