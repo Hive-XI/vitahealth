@@ -12,7 +12,7 @@ export function PatientDashboard() {
   return (
     <div className="grid gap-4">
       <header className="text-center md:text-left">
-        <p className="text-sm text-white/70">Today</p>
+        <p className="text-sm font-medium text-white/90">Today</p>
         <h1 className="font-display text-4xl font-bold">
           Hello, {profile.name.split(' ')[0]}
         </h1>
@@ -20,13 +20,10 @@ export function PatientDashboard() {
 
       <Card>
         <p className="text-sm text-muted">Adherence this week</p>
-        <p className="font-display mt-1 text-4xl font-semibold text-navy">
-          {percent}%
-        </p>
+        <p className="mt-1 text-4xl font-semibold text-navy">{percent}%</p>
         <p className="mt-1 text-sm text-muted">
           {medications.filter((med) => med.status === 'taken').length} of{' '}
-          {medications.length} doses logged today. Three missed doses in a row
-          trigger a check-in, then a clinic flag.
+          {medications.length} logged today.
         </p>
         <div className="mt-4 h-2 overflow-hidden rounded-full bg-line">
           <div
@@ -58,11 +55,9 @@ export function PatientDashboard() {
             HbA1c flagged
           </h2>
           <p className="mt-2 text-sm text-muted">
-            HbA1c is a blood test of average sugar over about three months. Your
-            result ({flagged[0].value}
-            {flagged[0].unit}) sits above the range printed on your report (
-            {flagged[0].range}). Vita flagged it for your clinician and will not
-            interpret a cause.
+            {flagged[0].value}
+            {flagged[0].unit} is above the report range ({flagged[0].range}).
+            Not a diagnosis — book a review.
           </p>
           <Link
             to="/app/labs/follow-up"

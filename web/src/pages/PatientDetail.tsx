@@ -22,7 +22,7 @@ export function PatientDetail() {
     <div className="grid gap-4">
       <header>
         <h1 className="font-display text-4xl font-bold">{patient.name}</h1>
-        <p className="text-white/75">
+        <p className="font-medium text-white/90">
           {patient.age} · {patient.conditions} · adherence {patient.adherence}%
         </p>
       </header>

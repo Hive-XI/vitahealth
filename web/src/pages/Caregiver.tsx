@@ -10,13 +10,12 @@ export function Caregiver() {
   return (
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Caregiver view</h1>
-      <p className="text-sm text-white/75">
-        You are supporting {profile.name}. With their consent you see adherence
-        and flags — not the full chat or medical file.
+      <p className="text-sm font-medium text-white/90">
+        Supporting {profile.name}. Adherence and flags only — not the full file.
       </p>
       <Card>
         <p className="text-sm text-muted">Linked patient adherence</p>
-        <p className="font-display text-4xl font-semibold text-navy">{percent}%</p>
+        <p className="text-4xl font-semibold text-navy">{percent}%</p>
       </Card>
       <Card>
         <h2 className="font-display text-lg font-semibold">Missed dose alerts</h2>

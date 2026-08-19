@@ -76,7 +76,7 @@ const defaultLabs: LabResult[] = [
     unit: '%',
     range: 'Below 7.0%',
     flagged: true,
-    note: 'This result is above the range printed on the report. Vita cannot diagnose the cause. A clinician should review your diabetes plan.',
+    note: 'Above the report range. A clinician should review.',
   },
   {
     id: 'l2',
@@ -85,7 +85,7 @@ const defaultLabs: LabResult[] = [
     unit: 'mmol/L',
     range: 'Below 2.6 mmol/L',
     flagged: false,
-    note: 'This value sits within the range on the report.',
+    note: 'Within the report range.',
   },
   {
     id: 'l3',
@@ -94,7 +94,7 @@ const defaultLabs: LabResult[] = [
     unit: 'µmol/L',
     range: '45–90 µmol/L',
     flagged: false,
-    note: 'This value sits within the range on the report.',
+    note: 'Within the report range.',
   },
 ]
 
@@ -182,30 +182,29 @@ const severePattern =
   /chest pain|can't breathe|cannot breathe|shortness of breath|suicid|unconscious|stroke|seizure|severe bleed|coughing blood|faint(ed|ing)|worst headache|not waking/i
 
 function vitaReply(text: string): string {
-  const stamp =
-    'AI-generated guidance — not a diagnosis. Vita will not confirm a cause or change your prescribed doses.\n\n'
+  const stamp = 'AI guidance — not a diagnosis.\n\n'
   const lower = text.toLowerCase()
   if (lower.includes('headache')) {
     return (
       stamp +
-      'Guidance tier: see a clinician if this is sudden and severe; otherwise self-care.\n\nClarifying questions:\n1. Did this start suddenly, or build over hours?\n2. Is there fever, neck stiffness, or vision change?\n3. Have you taken your usual medicines today?\n\nPossible explanations people discuss with a clinician include tension, dehydration, or blood-pressure related pain. None of these is confirmed here. If pain is sudden and severe, or vision changes, seek in-person care now. Otherwise rest, hydrate, and stay on the plan your clinic approved.'
+      'Tier: self-care unless sudden and severe.\n\n1. Sudden or gradual?\n2. Fever, neck stiffness, or vision change?\n3. Usual medicines taken today?\n\nIf sudden and severe, or vision changes, seek in-person care. Otherwise rest and hydrate.'
     )
   }
   if (lower.includes('cough') || lower.includes('cold') || lower.includes('fever')) {
     return (
       stamp +
-      'Guidance tier: self-care for mild presentations; see a clinician within a few days if it lasts or worsens.\n\nClarifying questions:\n1. How many days has this lasted?\n2. Is there wheeze, chest tightness, or blood in sputum?\n3. Are you able to drink fluids and stay awake normally?\n\nThis is not a diagnosis. If breathing is hard, or you have chest pain, use Emergency. Otherwise rest, fluids, and contact your clinic if it lasts beyond 3 days.'
+      'Tier: self-care if mild; see a clinician if it lasts or worsens.\n\n1. How many days?\n2. Wheeze, tightness, or blood in sputum?\n3. Drinking fluids and staying awake?\n\nHard to breathe or chest pain → Emergency. Lasts over 3 days → clinic.'
     )
   }
   if (lower.includes('sugar') || lower.includes('dizzy') || lower.includes('glucose')) {
     return (
       stamp +
-      'Guidance tier: follow your existing clinic protocol; seek urgent care if you feel confused or faint.\n\nClarifying questions:\n1. What was your last glucose reading, if you have one?\n2. Have you eaten and taken Metformin as scheduled?\n3. Any vomiting, confusion, or fainting?\n\nVita cannot diagnose the cause. If you feel confused, faint, or cannot keep fluids down, seek urgent care. Otherwise follow your clinic hypo/hyper protocol and log the reading in Labs.'
+      'Tier: follow your clinic protocol.\n\n1. Last glucose reading?\n2. Eaten and taken Metformin as scheduled?\n3. Vomiting, confusion, or fainting?\n\nConfused or faint → urgent care. Otherwise log the reading in Labs.'
     )
   }
   return (
     stamp +
-    'Guidance tier: self-care if mild; see a clinician if this is getting worse; Emergency for chest pain, breathing trouble, or stroke signs.\n\nClarifying questions:\n1. When did this start, and is it getting worse?\n2. Any chest pain, trouble breathing, bleeding, or fainting?\n3. Which medicines have you taken today?\n\nIf the case is unclear, Vita defers to your clinic rather than guessing.'
+    'Tier: self-care if mild; clinic if worse; Emergency for chest pain, breathing trouble, or stroke signs.\n\n1. When did this start?\n2. Chest pain, trouble breathing, bleeding, or fainting?\n3. Medicines taken today?\n\nIf unclear, Vita defers to your clinic.'
   )
 }
 
@@ -235,7 +234,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
     {
       id: 'c0',
       from: 'vita',
-      text: 'AI-generated guidance — not a diagnosis.\n\nHello Amara. Describe symptoms in your own words, or tap the microphone. I will ask follow-up questions and sort this into self-care, see a clinician, or emergency. I will not confirm a cause or change your prescribed doses.',
+      text: 'AI guidance — not a diagnosis. Tell me how you feel, or use the microphone.',
     },
   ])
   const [clinicPatients] = useState(defaultPatients)
@@ -289,7 +288,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
             {
               id: `v${Date.now()}`,
               from: 'vita',
-              text: 'Emergency pattern detected independently of the chat. Stop here and follow emergency steps. This is not a diagnosis.',
+              text: 'This needs emergency care. Redirecting.',
             },
           ])
           setEscalations((current) => [

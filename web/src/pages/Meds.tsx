@@ -12,8 +12,8 @@ export function Meds() {
           <h1 className="font-display text-4xl font-bold">
             Medication tracker
           </h1>
-          <p className="text-sm text-white/70">
-            Today’s list · {percent}% logged · clinic-verified plan
+          <p className="text-sm font-medium text-white/90">
+            Today · {percent}% logged
           </p>
         </div>
         <ButtonLink to="/app/meds/add" variant="secondary">
@@ -63,10 +63,8 @@ export function Meds() {
       <Card>
         <h2 className="font-display text-lg font-semibold">History</h2>
         <p className="mt-2 text-sm text-muted">
-          This week’s adherence is {percent}%. Three consecutive missed doses
-          prompt a patient check-in, then a flag on the clinic dashboard.
-          Invited caregivers also see missed-dose notices. Vita does not change
-          doses a clinician set.
+          This week: {percent}%. Three missed doses in a row flag the clinic.
+          Vita does not change prescribed doses.
         </p>
       </Card>
     </div>

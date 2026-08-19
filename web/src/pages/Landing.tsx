@@ -7,25 +7,27 @@ import {
   Pill,
   ShieldCheck,
 } from 'lucide-react'
-import { Logo, Mark } from '../components/Logo'
+import { ClinicianPhoto } from '../components/ClinicianPhoto'
+import { Logo } from '../components/Logo'
+import { BrandAtmosphere, PlusField } from '../components/BrandStage'
 import { Button, ButtonLink, Card } from '../components/ui'
 import { useVita } from '../context'
 
 const features = [
   {
     icon: MessageCircle,
-    title: 'AI symptom guidance',
-    body: 'Describe symptoms in text or voice. Vita asks follow-ups and sorts the visit into self-care, see a clinician, or emergency — labelled as AI guidance, never a diagnosis.',
+    title: 'Symptom guidance',
+    body: 'Text or voice. Self-care, see a clinician, or emergency — never a diagnosis.',
   },
   {
     icon: Pill,
-    title: 'Medication adherence',
-    body: 'Clinic-set reminders, taken or skipped logs, and a weekly adherence percentage. Three unresolved missed doses flag the clinic and an invited caregiver.',
+    title: 'Medications',
+    body: 'Reminders and a weekly adherence %. Three missed doses alert the clinic.',
   },
   {
     icon: FlaskConical,
-    title: 'Lab result explanation',
-    body: 'Plain-language meaning against the range printed on that report. Out-of-range values are flagged with a one-tap follow-up request.',
+    title: 'Labs',
+    body: 'Plain language against the range on your report. Out of range? Book follow-up.',
   },
 ]
 
@@ -33,7 +35,9 @@ export function Landing() {
   const { demoBooked, setDemoBooked } = useVita()
 
   return (
-    <div className="bg-navy text-white">
+    <div className="relative min-h-svh overflow-hidden bg-navy-ink text-white">
+      <BrandAtmosphere />
+      <div className="relative z-10">
       <header className="sticky top-0 z-30 border-b border-black/10 bg-white text-black">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5">
           <Link to="/" aria-label="Vita Health home">
@@ -57,25 +61,23 @@ export function Landing() {
         </div>
       </header>
 
-      <main id="main">
+      <main id="main" className="relative z-10">
         <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 text-center md:grid-cols-2 md:py-24 md:text-left">
           <div>
-            <p className="mb-3 text-sm font-semibold tracking-[0.18em] text-white/80 uppercase">
+            <p className="kicker mb-3 text-sm text-white/90">
               AI-powered patient companion
             </p>
             <h1 className="font-display text-4xl font-bold text-balance md:text-6xl">
-              Support between visits, visibility for the clinic
+              Support between visits
             </h1>
-            <p className="mx-auto mt-5 max-w-xl text-lg text-white/75 md:mx-0">
-              Vita Health bridges the consultation and daily self-management.
-              Patients get conversational guidance, medication reminders, and
-              plain-language labs. Partner clinics see who is at risk — without
-              Vita diagnosing, prescribing, or replacing a licensed clinician.
+            <p className="mx-auto mt-5 max-w-xl text-lg font-medium text-white/90 md:mx-0">
+              Guidance, reminders, and lab explainers for patients. Risk flags
+              for partner clinics. Not a diagnosis.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
               <ButtonLink to="/login">Get started</ButtonLink>
               <Button
-                variant="secondary"
+                variant="outline"
                 onClick={() => setDemoBooked(true)}
                 type="button"
               >
@@ -84,26 +86,24 @@ export function Landing() {
             </div>
             {demoBooked ? (
               <p className="mt-4 text-sm font-medium text-white" role="status">
-                Demo request saved. A clinic lead will follow up with a time.
+                Demo saved. A clinic lead will follow up.
               </p>
             ) : null}
-            <p className="mt-6 flex items-center justify-center gap-2 text-sm text-white/75 md:justify-start">
+            <p className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-white/90 md:justify-start">
               <ShieldCheck className="size-4 text-white" aria-hidden />
-              Decision-support only. Uncertain or severe cases go to a human.
+              Decision-support only. Emergencies skip the chat.
             </p>
           </div>
-          <PhonePreview />
+          <ClinicianFrame />
         </section>
 
         <section id="features" className="bg-white text-black">
           <div className="mx-auto max-w-6xl px-4 py-16">
             <h2 className="font-display text-3xl font-bold md:text-4xl">
-              Three patient layers, one clinic dashboard
+              For patients
             </h2>
             <p className="mt-3 max-w-2xl text-muted">
-              Built for deployment through partner clinics and health programmes
-              in Nigeria — not as a generic consumer chatbot. English and Hausa
-              at launch; Yoruba and Igbo in Phase 2.
+              Built for partner clinics in Nigeria. English and Hausa at launch.
             </p>
             <div className="mt-10 grid gap-4 md:grid-cols-3">
               {features.map((feature) => (
@@ -121,49 +121,21 @@ export function Landing() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 py-16">
-          <h2 className="font-display text-3xl font-bold md:text-4xl">
-            Product, at a glance
-          </h2>
-          <p className="mt-3 max-w-2xl text-white/75">
-            Today’s summary, medicines, labs, and a path to a clinician — the
-            same screens patients and clinics use after sign-in.
-          </p>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {[
-              ['Today', 'Adherence 67% · 2 doses still due'],
-              ['Labs', 'HbA1c 8.2% flagged against your report'],
-              ['Clinic', 'Queue sorted by missed doses and flags'],
-            ].map(([title, body]) => (
-              <Card key={title} className="min-h-36">
-                <p className="text-sm font-semibold text-burgundy">{title}</p>
-                <p className="mt-2 text-lg font-medium">{body}</p>
-              </Card>
-            ))}
-          </div>
-        </section>
-
         <section id="clinics" className="bg-navy-ink text-white">
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2">
             <div>
-              <p className="mb-3 flex items-center gap-2 text-sm font-semibold tracking-wide text-white/70 uppercase">
+              <p className="kicker mb-3 flex items-center gap-2 text-sm text-white/90">
                 <Building2 className="size-4" aria-hidden />
                 For clinics
               </p>
               <h2 className="font-display text-3xl font-bold md:text-4xl">
-                A real-time panel for stretched clinical teams
+                See who needs you first
               </h2>
-              <p className="mt-4 text-white/80">
-                Staff see enrolled patients, adherence percentages, last
-                check-in, and an escalation queue sorted by urgency — missed
-                doses, flagged labs, and severe symptom reports — without
-                reviewing every record by hand.
+              <p className="mt-4 font-medium text-white/90">
+                Adherence, last check-in, and an urgency queue — not every
+                record.
               </p>
-              <ButtonLink
-                to="/login"
-                variant="secondary"
-                className="mt-8 bg-white text-navy"
-              >
+              <ButtonLink to="/login" variant="outline" className="mt-8">
                 Open clinic preview
                 <ArrowRight className="size-4" aria-hidden />
               </ButtonLink>
@@ -189,51 +161,35 @@ export function Landing() {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 py-16 text-center">
-          <Mark className="mx-auto size-12" />
+          <PlusField className="mx-auto size-14" />
           <h2 className="mt-6 font-display text-3xl font-bold md:text-4xl">
-            Care plan → support → monitoring → risk detection → escalation
+            Try the prototype
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-white/75">
-            Open this prototype as a patient or as clinic staff. Consent and
-            profile setup come first for patients.
+          <p className="mx-auto mt-3 max-w-xl font-medium text-white/90">
+            Sign in as a patient or as clinic staff.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <ButtonLink to="/login">Get started</ButtonLink>
-            <Button variant="secondary" onClick={() => setDemoBooked(true)}>
+            <Button variant="outline" onClick={() => setDemoBooked(true)}>
               Book demo
             </Button>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-white/15 px-4 py-8 text-center text-sm text-white/60">
-        Vita Health · Hive XI · Decision-support only · Not a diagnostic service
+      <footer className="relative z-10 border-t border-white/15 px-4 py-8 text-center text-sm font-medium text-white/80">
+        Vita Health · Not a diagnostic service
       </footer>
+    </div>
     </div>
   )
 }
 
-function PhonePreview() {
+function ClinicianFrame() {
   return (
-    <div className="mx-auto w-full max-w-sm rounded-[2rem] bg-navy-ink p-3 ring-1 ring-white/20">
-      <div className="rounded-[1.5rem] bg-white p-5 text-black">
-        <p className="text-sm text-muted">Good evening, Amara</p>
-        <h3 className="font-display mt-1 text-2xl font-bold">Today</h3>
-        <div className="mt-5 grid gap-3">
-          <div className="rounded-2xl bg-white p-4 ring-1 ring-line">
-            <p className="text-sm text-muted">Adherence this week</p>
-            <p className="font-display text-3xl font-semibold text-navy">67%</p>
-            <p className="text-sm text-muted">2 of 3 doses logged today</p>
-          </div>
-          <div className="rounded-2xl bg-white p-4 ring-1 ring-line">
-            <p className="text-sm font-semibold">Lisinopril 10 mg</p>
-            <p className="text-sm text-muted">Due · 08:00 reminder</p>
-          </div>
-          <div className="rounded-2xl bg-burgundy/10 p-4 ring-1 ring-burgundy/30">
-            <p className="text-sm font-semibold text-burgundy">HbA1c flagged</p>
-            <p className="text-sm text-muted">Book a clinic follow-up</p>
-          </div>
-        </div>
+    <div className="ticket mx-auto w-full max-w-md">
+      <div className="relative overflow-hidden rounded-[2rem] bg-[#f4f1ea]">
+        <ClinicianPhoto className="aspect-[4/5] w-full sm:aspect-[3/4]" />
       </div>
     </div>
   )

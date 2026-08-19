@@ -11,30 +11,22 @@ export function ClinicDashboard() {
     <div className="grid gap-6">
       <header>
         <h1 className="font-display text-4xl font-bold">Clinic dashboard</h1>
-        <p className="text-white/75">
-          Enrolled panel with adherence, last check-in, and status flags.
-          Escalations are sorted by urgency so outreach is not a full-record
-          review.
+        <p className="font-medium text-white/90">
+          Sorted by who needs outreach first.
         </p>
       </header>
       <div className="grid gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-sm text-muted">Enrolled</p>
-          <p className="font-display text-3xl font-semibold">
-            {clinicPatients.length}
-          </p>
+          <p className="text-3xl font-semibold">{clinicPatients.length}</p>
         </Card>
         <Card>
           <p className="text-sm text-muted">Open escalations</p>
-          <p className="font-display text-3xl font-semibold text-burgundy">
-            {open}
-          </p>
+          <p className="text-3xl font-semibold text-burgundy">{open}</p>
         </Card>
         <Card>
           <p className="text-sm text-muted">Lowest adherence</p>
-          <p className="font-display text-3xl font-semibold">
-            {ranked[0]?.adherence}%
-          </p>
+          <p className="text-3xl font-semibold">{ranked[0]?.adherence}%</p>
         </Card>
       </div>
       <Card>

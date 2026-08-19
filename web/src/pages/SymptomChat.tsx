@@ -31,9 +31,8 @@ export function SymptomChat() {
   return (
     <div className="flex min-h-[70vh] flex-col">
       <h1 className="font-display text-3xl font-bold">Symptom guidance</h1>
-      <p className="text-sm text-white/75">
-        Free text or voice. Replies are AI-generated, sorted into self-care, see
-        a clinician, or emergency — never a confirmed diagnosis.
+      <p className="text-sm font-medium text-white/90">
+        AI replies. Not a diagnosis. Use Emergency for severe symptoms.
       </p>
       <ol className="mt-4 flex flex-1 flex-col gap-3">
         {messages.map((message) => (
@@ -46,7 +45,7 @@ export function SymptomChat() {
             }`}
           >
             {message.from === 'vita' ? (
-              <p className="mb-1 text-[11px] font-semibold tracking-wide text-white/70 uppercase">
+              <p className="kicker mb-1 text-[11px] text-white/90">
                 AI-generated
               </p>
             ) : null}
@@ -74,7 +73,7 @@ export function SymptomChat() {
       </div>
       {reviewSent ? (
         <p className="mt-2 text-sm font-medium text-white" role="status">
-          Review requested. Your clinic will see this in the escalation queue.
+          Review requested. On the clinic queue.
         </p>
       ) : null}
       <form onSubmit={submit} className="mt-3 flex gap-2">

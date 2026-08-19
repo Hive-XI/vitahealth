@@ -26,9 +26,8 @@ export function AddMed() {
   return (
     <form onSubmit={save} className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Add medication</h1>
-      <p className="text-sm text-white/75">
-        Prefer clinic-verified plans. Manual entry is for bridging until your
-        team confirms the schedule.
+      <p className="text-sm font-medium text-white/90">
+        Prefer a clinic-verified plan. Manual entry is temporary.
       </p>
       <Card className="grid gap-4">
         <Field id="med-name" label="Name">

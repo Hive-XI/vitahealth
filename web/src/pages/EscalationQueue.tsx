@@ -15,16 +15,12 @@ export function EscalationQueue() {
   return (
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Escalation queue</h1>
-      <p className="text-white/75">
-        Repeated missed doses, flagged labs, severe-symptom redirects, and
-        requested clinical reviews — highest urgency first. Interactions stay
-        available here for clinic audit.
-      </p>
+      <p className="font-medium text-white/90">Highest urgency first.</p>
       {sorted.map((item) => (
         <Card key={item.id}>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+              <p className="kicker text-xs text-muted">
                 {item.type.replace('-', ' ')} · {item.urgency}
               </p>
               <h2 className="font-display mt-1 text-lg font-semibold">

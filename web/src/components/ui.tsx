@@ -9,12 +9,15 @@ export function Button({
   className = '',
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline'
 }) {
   const styles = {
     primary: 'bg-burgundy text-white hover:bg-burgundy-ink',
-    secondary: 'bg-white text-navy ring-1 ring-white/20 hover:bg-white/90',
+    secondary:
+      'bg-white text-navy ring-1 ring-line hover:bg-burgundy hover:text-white',
     ghost: 'bg-transparent text-navy hover:bg-navy/10',
+    outline:
+      'bg-transparent text-white ring-1 ring-white hover:bg-white hover:text-navy',
     danger: 'bg-burgundy text-white hover:bg-burgundy-ink',
   }[variant]
   return <button className={`${btn} ${styles} ${className}`} {...props} />
@@ -28,13 +31,15 @@ export function ButtonLink({
 }: {
   to: string
   children: ReactNode
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
-  className?: string
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline'
 }) {
   const styles = {
     primary: 'bg-burgundy text-white hover:bg-burgundy-ink',
-    secondary: 'bg-white text-navy ring-1 ring-white/20 hover:bg-white/90',
+    secondary:
+      'bg-white text-navy ring-1 ring-line hover:bg-burgundy hover:text-white',
     ghost: 'bg-transparent text-navy hover:bg-navy/10',
+    outline:
+      'bg-transparent text-white ring-1 ring-white hover:bg-white hover:text-navy',
     danger: 'bg-burgundy text-white hover:bg-burgundy-ink',
   }[variant]
   return (

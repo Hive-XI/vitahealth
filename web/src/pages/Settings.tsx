@@ -53,7 +53,7 @@ export function Settings() {
         <Field
           id="set-caregiver"
           label="Invited caregiver"
-          hint="They receive missed-dose and flagged-result notices only."
+          hint="Missed doses and flagged labs only."
         >
           <input
             id="set-caregiver"
@@ -117,8 +117,7 @@ export function Settings() {
       <Card className="grid gap-3">
         <h2 className="font-display text-lg font-semibold">Account</h2>
         <p className="text-sm text-muted">
-          Log out returns you to the Vita home page. You can sign in again as a
-          patient or as clinic staff.
+          Log out returns you to the home page.
         </p>
         <LogoutButton variant="danger" className="w-full" />
       </Card>

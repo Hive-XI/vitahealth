@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { BrandAtmosphere } from '../components/BrandStage'
+import { Logo } from '../components/Logo'
 import { LogoutButton } from '../components/LogoutButton'
 import { Button, Card, Field, inputClass } from '../components/ui'
 import { useVita } from '../context'
@@ -8,16 +10,21 @@ export function ProfileSetup() {
   const { profile, setProfile } = useVita()
 
   return (
-    <div className="mx-auto min-h-svh max-w-lg bg-navy px-4 py-10 text-white">
-      <div className="mb-6 flex justify-end">
-        <LogoutButton className="px-3 text-sm text-white hover:bg-white/10" />
+    <div className="relative min-h-svh overflow-hidden bg-[#f4f1ea] text-black lg:bg-navy-ink lg:text-white">
+      <div className="hidden lg:block">
+        <BrandAtmosphere />
       </div>
-      <h1 className="text-center font-display text-4xl font-bold md:text-left">
+      <div className="relative z-10 mx-auto min-h-svh max-w-lg">
+        <header className="flex items-center justify-between bg-[#f4f1ea] px-4 py-3 text-black">
+          <Logo />
+          <LogoutButton className="px-3 text-sm" />
+        </header>
+        <main id="main" className="bg-[#f4f1ea] px-4 py-8 lg:bg-transparent lg:py-10">
+      <h1 className="font-display text-4xl font-bold">
         Profile setup
       </h1>
-      <p className="mt-2 text-center text-white/75 md:text-left">
-        This helps reminders and clinic visibility. Your clinic can still verify
-        the medication plan later.
+      <p className="mt-2 font-medium text-muted lg:text-white/90">
+        Used for reminders. Your clinic can verify the med plan later.
       </p>
       <Card className="mt-6 grid gap-4">
         <Field id="name" label="Name">
@@ -54,7 +61,7 @@ export function ProfileSetup() {
         <Field
           id="medications"
           label="Current medications"
-          hint="Your clinic can create or verify this plan so reminders stay accurate."
+          hint="Clinic can verify this plan."
         >
           <textarea
             id="medications"
@@ -68,7 +75,7 @@ export function ProfileSetup() {
         <Field
           id="caregiver"
           label="Invite a caregiver (optional)"
-          hint="They will see adherence and flagged results you allow — not the full chat."
+          hint="Adherence and flags only."
         >
           <input
             id="caregiver"
@@ -84,6 +91,8 @@ export function ProfileSetup() {
           Save and open dashboard
         </Button>
       </Card>
+        </main>
+      </div>
     </div>
   )
 }

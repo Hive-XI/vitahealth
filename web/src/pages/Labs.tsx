@@ -23,8 +23,8 @@ export function Labs() {
       range: range.trim() || 'Use the range printed on your report',
       flagged,
       note: flagged
-        ? 'This looks outside the range you entered from the report. Vita will not invent a cause. Ask a clinician to review.'
-        : 'Stored against the range you provided from the report.',
+        ? 'Outside the report range. Ask a clinician to review.'
+        : 'Within the range you entered.',
     }
     addLab(lab)
     setName('')
@@ -36,10 +36,8 @@ export function Labs() {
   return (
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Lab results</h1>
-      <p className="text-sm text-white/75">
-        Enter values using the reference range on that laboratory report. Vita
-        explains in plain language. Out-of-range results are flagged and paired
-        with a follow-up request — not a diagnosis.
+      <p className="text-sm font-medium text-white/90">
+        Use the range on your report. Out of range is flagged — not diagnosed.
       </p>
       <form onSubmit={save}>
         <Card className="grid gap-3">

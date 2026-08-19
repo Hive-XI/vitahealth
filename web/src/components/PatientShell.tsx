@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { MessageCircle, Pill, FlaskConical, UserRound } from 'lucide-react'
 import { Logo } from './Logo'
+import { BrandAtmosphere } from './BrandStage'
 import { LogoutButton } from './LogoutButton'
 
 const items = [
@@ -13,7 +14,9 @@ const items = [
 
 export function PatientShell() {
   return (
-    <div className="min-h-svh bg-navy text-white">
+    <div className="relative min-h-svh overflow-hidden bg-navy-ink text-white">
+      <BrandAtmosphere />
+      <div className="relative z-10 min-h-svh">
       <header className="sticky top-0 z-20 border-b border-black/10 bg-white px-4 py-2.5 text-black">
         <div className="mx-auto flex max-w-lg items-center justify-between gap-3">
           <Logo />
@@ -52,6 +55,7 @@ export function PatientShell() {
           ))}
         </ul>
       </nav>
+      </div>
     </div>
   )
 }

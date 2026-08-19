@@ -5,15 +5,14 @@ export function Emergency() {
   return (
     <div className="grid gap-4">
       <Card className="bg-burgundy text-white ring-0">
-        <p className="text-sm font-semibold uppercase tracking-wide text-white/80">
+        <p className="kicker text-sm text-white/90">
           Emergency escalation
         </p>
         <h1 className="font-display mt-2 text-3xl font-semibold">
-          Stop the chat. Get help now.
+          Get help now
         </h1>
-        <p className="mt-3 text-white/90">
-          Severe symptoms are not handled by Vita’s AI. Call emergency services,
-          then tell a caregiver or your clinic.
+        <p className="mt-3 font-medium text-white/90">
+          Vita will not handle this. Call 112, then your clinic or caregiver.
         </p>
       </Card>
       <a
@@ -28,13 +27,13 @@ export function Emergency() {
           Approved next steps
         </h2>
         <ul className="mt-3 list-disc space-y-2 pl-5 text-muted">
-          <li>Nearest emergency unit: St. Mary’s District Hospital, 1.8 km</li>
-          <li>Clinic on-call: +234 800 111 2222</li>
-          <li>Caregiver alert: sent to the number on your profile, if invited</li>
+          <li>St. Mary’s District Hospital · 1.8 km</li>
+          <li>Clinic on-call · +234 800 111 2222</li>
+          <li>Caregiver alert sent if invited</li>
         </ul>
       </Card>
       <ButtonLink to="/app" variant="secondary">
-        Return to dashboard only if you are safe
+        Return if you are safe
       </ButtonLink>
     </div>
   )
