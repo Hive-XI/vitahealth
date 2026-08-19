@@ -19,17 +19,19 @@ export function Consent() {
         Disclaimer and consent
       </h1>
       <p className="mt-2 text-center text-white/75 md:text-left">
-        You must acknowledge both notices before Vita opens a patient workspace.
+        Vita is a decision-support and adherence tool. It does not diagnose,
+        prescribe, or replace a licensed clinician.
       </p>
 
       <Card className="mt-6">
         <h2 className="font-display text-lg font-semibold">
-          Vita is not a diagnosis
+          AI guidance is not a diagnosis
         </h2>
         <p className="mt-2 text-muted">
-          Symptom chat can ask questions and list possible causes. It does not
-          decide whether you have a serious condition. A separate safety layer
-          sends severe symptoms to emergency care and to your clinic.
+          Every chat reply is labelled as AI-generated. Possible causes are never
+          confirmed. Uncertain cases defer to your clinic. Chest pain, trouble
+          breathing, stroke signs, and similar patterns skip the chat and open
+          emergency steps.
         </p>
         <label className="mt-4 flex min-h-11 cursor-pointer items-start gap-3 text-sm font-medium">
           <input
@@ -38,17 +40,20 @@ export function Consent() {
             checked={ai}
             onChange={(event) => setAi(event.target.checked)}
           />
-          I understand Vita is not a diagnosis and will not replace emergency or
-          clinic care.
+          I understand Vita will not diagnose or prescribe, and will not replace
+          emergency or clinic care.
         </label>
       </Card>
 
       <Card className="mt-4">
-        <h2 className="font-display text-lg font-semibold">Data consent</h2>
+        <h2 className="font-display text-lg font-semibold">
+          Data consent (NDPA)
+        </h2>
         <p className="mt-2 text-muted">
-          Adherence logs, lab values you enter, and chat summaries can be shared
-          with clinicians you enrol with, and with a caregiver you invite. You
-          can change this later in Profile.
+          Hive XI collects the minimum needed for reminders, lab explanation, and
+          clinic review. Data is used only for that care-plan purpose. Sharing
+          with a caregiver is opt-in. Partner clinics remain clinically
+          responsible.
         </p>
         <label className="mt-4 flex min-h-11 cursor-pointer items-start gap-3 text-sm font-medium">
           <input
@@ -57,8 +62,8 @@ export function Consent() {
             checked={data}
             onChange={(event) => setData(event.target.checked)}
           />
-          I consent to Vita storing my care-plan data and sharing it with my
-          clinic and invited caregiver.
+          I consent to my partner clinic storing this data, and to sharing it
+          with a caregiver only if I invite one.
         </label>
       </Card>
 

@@ -1,11 +1,12 @@
-# Vita Health UI
+# Vita Health
 
-Working prototype of the FigJam user flow for Vita Health (Vi+). This is an interpreted product UI — the Figma file is a board of screen notes, not pixel mockups.
+Working prototype of Vita Health (Vi+), an AI-powered patient companion for partner clinics. Copy follows the Hive XI concept note: decision-support and adherence only — not diagnosis or prescribing.
+
+This folder is the deployable app. Run it from here.
 
 ## View locally
 
 ```bash
-cd web
 npm install
 npm run dev
 ```
@@ -14,14 +15,14 @@ Then open the URL Vite prints (usually http://localhost:5173).
 
 ## Screens
 
-| Path | FigJam screen |
+| Path | Screen |
 | --- | --- |
-| `/` | Landing page |
+| `/` | Landing |
 | `/login` | Sign up / Log in |
 | `/consent` | Disclaimer and consent |
 | `/setup` | Profile setup |
 | `/app` | Patient dashboard |
-| `/app/chat` | Symptom chat |
+| `/app/chat` | Symptom guidance |
 | `/app/chat/emergency` | Emergency escalation |
 | `/app/meds` | Medication tracker |
 | `/app/meds/add` | Add medication |
@@ -31,10 +32,10 @@ Then open the URL Vite prints (usually http://localhost:5173).
 | `/app/caregiver` | Caregiver view |
 | `/clinic` | Clinic dashboard |
 | `/clinic/queue` | Escalation queue |
-| `/clinic/patients/:id` | Patient detail view |
+| `/clinic/patients/:id` | Patient detail |
 
 Patient path: **Get started → Patient → Continue → consent → setup → dashboard**.
 
 Clinic path: **Get started → Clinic staff → Continue**.
 
-Type `chest pain` or `can't breathe` in chat to trigger emergency escalation.
+Type `chest pain` or `can't breathe` in chat to trigger the emergency safety layer.

@@ -14,18 +14,18 @@ import { useVita } from '../context'
 const features = [
   {
     icon: MessageCircle,
-    title: 'Symptom guidance',
-    body: 'Describe how you feel. Vita asks clarifying questions, names possible causes, and never claims a diagnosis.',
+    title: 'AI symptom guidance',
+    body: 'Describe symptoms in text or voice. Vita asks follow-ups and sorts the visit into self-care, see a clinician, or emergency — labelled as AI guidance, never a diagnosis.',
   },
   {
     icon: Pill,
-    title: 'Care-plan reminders',
-    body: 'Follow the medicines your clinic verified. Log taken or skipped doses and see adherence as a percentage, not a game.',
+    title: 'Medication adherence',
+    body: 'Clinic-set reminders, taken or skipped logs, and a weekly adherence percentage. Three unresolved missed doses flag the clinic and an invited caregiver.',
   },
   {
     icon: FlaskConical,
-    title: 'Plain-language labs',
-    body: 'Enter values against the range on your own report. Out-of-range results are flagged for a clinician, not interpreted away.',
+    title: 'Lab result explanation',
+    body: 'Plain-language meaning against the range printed on that report. Out-of-range values are flagged with a one-tap follow-up request.',
   },
 ]
 
@@ -61,15 +61,16 @@ export function Landing() {
         <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 text-center md:grid-cols-2 md:py-24 md:text-left">
           <div>
             <p className="mb-3 text-sm font-semibold tracking-[0.18em] text-white/80 uppercase">
-              Continuity of care
+              AI-powered patient companion
             </p>
             <h1 className="font-display text-4xl font-bold text-balance md:text-6xl">
-              Care that continues after you leave the clinic
+              Support between visits, visibility for the clinic
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg text-white/75 md:mx-0">
-              Vita Health extends clinical support beyond the hospital. Patients
-              follow their care plan. Teams see problems that need intervention —
-              not an AI that diagnoses on its own.
+              Vita Health bridges the consultation and daily self-management.
+              Patients get conversational guidance, medication reminders, and
+              plain-language labs. Partner clinics see who is at risk — without
+              Vita diagnosing, prescribing, or replacing a licensed clinician.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
               <ButtonLink to="/login">Get started</ButtonLink>
@@ -88,7 +89,7 @@ export function Landing() {
             ) : null}
             <p className="mt-6 flex items-center justify-center gap-2 text-sm text-white/75 md:justify-start">
               <ShieldCheck className="size-4 text-white" aria-hidden />
-              AI is a companion, not a diagnosis. Emergencies skip the chat.
+              Decision-support only. Uncertain or severe cases go to a human.
             </p>
           </div>
           <PhonePreview />
@@ -97,12 +98,12 @@ export function Landing() {
         <section id="features" className="bg-white text-black">
           <div className="mx-auto max-w-6xl px-4 py-16">
             <h2 className="font-display text-3xl font-bold md:text-4xl">
-              An AI health companion with a safety layer
+              Three patient layers, one clinic dashboard
             </h2>
             <p className="mt-3 max-w-2xl text-muted">
-              Medication reminders do not need AI. Vita uses AI where it helps:
-              symptom guidance, plain explanations, and spotting patterns — while
-              critical decisions stay under clinic rules.
+              Built for deployment through partner clinics and health programmes
+              in Nigeria — not as a generic consumer chatbot. English and Hausa
+              at launch; Yoruba and Igbo in Phase 2.
             </p>
             <div className="mt-10 grid gap-4 md:grid-cols-3">
               {features.map((feature) => (
@@ -150,13 +151,13 @@ export function Landing() {
                 For clinics
               </p>
               <h2 className="font-display text-3xl font-bold md:text-4xl">
-                See who needs you, not every record at once
+                A real-time panel for stretched clinical teams
               </h2>
               <p className="mt-4 text-white/80">
-                The clinic dashboard ranks enrolled patients by missed
-                medication, abnormal results, and unresolved symptoms. Staff
-                review the escalation queue, open a patient file, and add a
-                clinical note.
+                Staff see enrolled patients, adherence percentages, last
+                check-in, and an escalation queue sorted by urgency — missed
+                doses, flagged labs, and severe symptom reports — without
+                reviewing every record by hand.
               </p>
               <ButtonLink
                 to="/login"
@@ -190,11 +191,11 @@ export function Landing() {
         <section className="mx-auto max-w-6xl px-4 py-16 text-center">
           <Mark className="mx-auto size-12" />
           <h2 className="mt-6 font-display text-3xl font-bold md:text-4xl">
-            Care plan → support → monitoring → escalation
+            Care plan → support → monitoring → risk detection → escalation
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-white/75">
-            Start as a patient or clinic staff. You will choose a role, accept
-            consent, and land on the matching workspace.
+            Open this prototype as a patient or as clinic staff. Consent and
+            profile setup come first for patients.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <ButtonLink to="/login">Get started</ButtonLink>
@@ -206,7 +207,7 @@ export function Landing() {
       </main>
 
       <footer className="border-t border-white/15 px-4 py-8 text-center text-sm text-white/60">
-        Vita Health · Vi+ · Not a diagnostic service
+        Vita Health · Hive XI · Decision-support only · Not a diagnostic service
       </footer>
     </div>
   )

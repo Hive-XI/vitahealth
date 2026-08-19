@@ -12,7 +12,9 @@ export function ClinicDashboard() {
       <header>
         <h1 className="font-display text-4xl font-bold">Clinic dashboard</h1>
         <p className="text-white/75">
-          Patients who need attention first — not a flat list of records.
+          Enrolled panel with adherence, last check-in, and status flags.
+          Escalations are sorted by urgency so outreach is not a full-record
+          review.
         </p>
       </header>
       <div className="grid gap-4 sm:grid-cols-3">
@@ -51,6 +53,7 @@ export function ClinicDashboard() {
               <tr>
                 <th className="pb-3 font-medium">Patient</th>
                 <th className="pb-3 font-medium">Adherence</th>
+                <th className="pb-3 font-medium">Last check-in</th>
                 <th className="pb-3 font-medium">Why they need you</th>
               </tr>
             </thead>
@@ -69,6 +72,7 @@ export function ClinicDashboard() {
                     </p>
                   </td>
                   <td className="py-3 font-semibold">{patient.adherence}%</td>
+                  <td className="py-3 text-muted">{patient.lastContact}</td>
                   <td className="py-3">{patient.risk}</td>
                 </tr>
               ))}

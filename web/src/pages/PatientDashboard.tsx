@@ -25,7 +25,8 @@ export function PatientDashboard() {
         </p>
         <p className="mt-1 text-sm text-muted">
           {medications.filter((med) => med.status === 'taken').length} of{' '}
-          {medications.length} doses logged today. Progress, not a streak.
+          {medications.length} doses logged today. Three missed doses in a row
+          trigger a check-in, then a clinic flag.
         </p>
         <div className="mt-4 h-2 overflow-hidden rounded-full bg-line">
           <div
@@ -59,9 +60,9 @@ export function PatientDashboard() {
           <p className="mt-2 text-sm text-muted">
             HbA1c is a blood test of average sugar over about three months. Your
             result ({flagged[0].value}
-            {flagged[0].unit}) is above the range on your report (
-            {flagged[0].range}), so Vita marked it for a clinician. This is not a
-            diagnosis.
+            {flagged[0].unit}) sits above the range printed on your report (
+            {flagged[0].range}). Vita flagged it for your clinician and will not
+            interpret a cause.
           </p>
           <Link
             to="/app/labs/follow-up"
@@ -74,7 +75,7 @@ export function PatientDashboard() {
 
       <nav aria-label="Shortcuts" className="grid grid-cols-2 gap-3">
         {[
-          { to: '/app/chat', label: 'Chat', icon: MessageCircle },
+          { to: '/app/chat', label: 'Guidance', icon: MessageCircle },
           { to: '/app/meds', label: 'Meds', icon: Pill },
           { to: '/app/labs', label: 'Labs', icon: FlaskConical },
           { to: '/app/profile', label: 'Profile', icon: UserRound },

@@ -6,7 +6,7 @@ import { useVita } from '../context'
 
 export function SymptomChat() {
   const navigate = useNavigate()
-  const { messages, sendChat } = useVita()
+  const { messages, sendChat, requestClinicalReview } = useVita()
   const [draft, setDraft] = useState('')
   const [listening, setListening] = useState(false)
   const [reviewSent, setReviewSent] = useState(false)
@@ -30,9 +30,10 @@ export function SymptomChat() {
 
   return (
     <div className="flex min-h-[70vh] flex-col">
-      <h1 className="font-display text-3xl font-bold">Symptom chat</h1>
+      <h1 className="font-display text-3xl font-bold">Symptom guidance</h1>
       <p className="text-sm text-white/75">
-        Free text or voice. Possible causes are not a diagnosis.
+        Free text or voice. Replies are AI-generated, sorted into self-care, see
+        a clinician, or emergency — never a confirmed diagnosis.
       </p>
       <ol className="mt-4 flex flex-1 flex-col gap-3">
         {messages.map((message) => (
@@ -44,6 +45,11 @@ export function SymptomChat() {
                 : 'bg-white/12 text-white ring-1 ring-white/20'
             }`}
           >
+            {message.from === 'vita' ? (
+              <p className="mb-1 text-[11px] font-semibold tracking-wide text-white/70 uppercase">
+                AI-generated
+              </p>
+            ) : null}
             {message.text}
           </li>
         ))}
@@ -56,13 +62,18 @@ export function SymptomChat() {
           type="button"
           variant="secondary"
           className="flex-1"
-          onClick={() => setReviewSent(true)}
+          onClick={() => {
+            requestClinicalReview(
+              'Patient requested clinical review from symptom guidance.',
+            )
+            setReviewSent(true)
+          }}
         >
           Request clinical review
         </Button>
       </div>
       {reviewSent ? (
-        <p className="mt-2 text-sm font-medium text-navy" role="status">
+        <p className="mt-2 text-sm font-medium text-white" role="status">
           Review requested. Your clinic will see this in the escalation queue.
         </p>
       ) : null}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { LogoutButton } from '../components/LogoutButton'
 import { Button, ButtonLink, Card, Field, inputClass } from '../components/ui'
 import { useVita } from '../context'
+import { appLanguages } from '../languages'
 
 export function Settings() {
   const { profile, setProfile, language, setLanguage } = useVita()
@@ -82,11 +83,9 @@ export function Settings() {
               setProfile({ ...profile, language: event.target.value })
             }}
           >
-            {['English', 'Français', 'Hausa', 'Yoruba', 'Kiswahili'].map(
-              (item) => (
-                <option key={item}>{item}</option>
-              ),
-            )}
+            {appLanguages.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
           </select>
         </Field>
         <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm font-medium">

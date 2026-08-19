@@ -2,8 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Logo } from '../components/Logo'
 import { Button, Card, Field, inputClass } from '../components/ui'
 import { useVita } from '../context'
-
-const languages = ['English', 'Français', 'Hausa', 'Yoruba', 'Kiswahili']
+import { appLanguages } from '../languages'
 
 export function Auth() {
   const navigate = useNavigate()
@@ -35,7 +34,8 @@ export function Auth() {
           Sign up / Log in
         </h1>
         <p className="mt-2 text-center text-white/75 md:text-left">
-          Choose who you are. Vita keeps patient and clinic workspaces separate.
+          Vita is offered through partner clinics, not as a standalone consumer
+          app. Patient and clinic workspaces stay separate.
         </p>
 
         <div className="mt-8 grid grid-cols-2 gap-3" role="group" aria-label="Role">
@@ -91,7 +91,7 @@ export function Auth() {
               value={language}
               onChange={(event) => setLanguage(event.target.value)}
             >
-              {languages.map((item) => (
+              {appLanguages.map((item) => (
                 <option key={item}>{item}</option>
               ))}
             </select>

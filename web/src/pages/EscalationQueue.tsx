@@ -16,8 +16,9 @@ export function EscalationQueue() {
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Escalation queue</h1>
       <p className="text-white/75">
-        Missed doses, flagged labs, and severe symptom reports — highest urgency
-        first.
+        Repeated missed doses, flagged labs, severe-symptom redirects, and
+        requested clinical reviews — highest urgency first. Interactions stay
+        available here for clinic audit.
       </p>
       {sorted.map((item) => (
         <Card key={item.id}>

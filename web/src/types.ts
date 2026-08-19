@@ -31,7 +31,7 @@ export type Escalation = {
   id: string
   patientId: string
   patientName: string
-  type: 'missed-dose' | 'flagged-lab' | 'severe-symptom'
+  type: 'missed-dose' | 'flagged-lab' | 'severe-symptom' | 'clinical-review'
   urgency: 'high' | 'medium' | 'low'
   summary: string
   reviewed: boolean

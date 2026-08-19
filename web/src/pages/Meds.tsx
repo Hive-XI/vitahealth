@@ -12,7 +12,9 @@ export function Meds() {
           <h1 className="font-display text-4xl font-bold">
             Medication tracker
           </h1>
-          <p className="text-sm text-white/70">Today’s list · {percent}% logged</p>
+          <p className="text-sm text-white/70">
+            Today’s list · {percent}% logged · clinic-verified plan
+          </p>
         </div>
         <ButtonLink to="/app/meds/add" variant="secondary">
           Add
@@ -61,9 +63,10 @@ export function Meds() {
       <Card>
         <h2 className="font-display text-lg font-semibold">History</h2>
         <p className="mt-2 text-sm text-muted">
-          This week’s adherence is {percent}%. Missed doses notify your clinic
-          and any caregiver you invited. Vita does not turn this into a streak
-          or scoreboard.
+          This week’s adherence is {percent}%. Three consecutive missed doses
+          prompt a patient check-in, then a flag on the clinic dashboard.
+          Invited caregivers also see missed-dose notices. Vita does not change
+          doses a clinician set.
         </p>
       </Card>
     </div>

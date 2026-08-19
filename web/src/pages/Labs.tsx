@@ -37,8 +37,9 @@ export function Labs() {
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Lab results</h1>
       <p className="text-sm text-white/75">
-        Enter or describe values using the reference range on your own report.
-        Vita explains in plain language and flags out-of-range results.
+        Enter values using the reference range on that laboratory report. Vita
+        explains in plain language. Out-of-range results are flagged and paired
+        with a follow-up request — not a diagnosis.
       </p>
       <form onSubmit={save}>
         <Card className="grid gap-3">

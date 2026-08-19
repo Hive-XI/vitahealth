@@ -11,8 +11,8 @@ export function Caregiver() {
     <div className="grid gap-4">
       <h1 className="font-display text-4xl font-bold">Caregiver view</h1>
       <p className="text-sm text-white/75">
-        You are supporting {profile.name}. You see adherence and flags they
-        consented to share — not a full medical record.
+        You are supporting {profile.name}. With their consent you see adherence
+        and flags — not the full chat or medical file.
       </p>
       <Card>
         <p className="text-sm text-muted">Linked patient adherence</p>

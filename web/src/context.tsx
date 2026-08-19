@@ -34,6 +34,7 @@ type VitaState = {
   addMedication: (med: Omit<Medication, 'id' | 'status'>) => void
   addLab: (lab: Omit<LabResult, 'id'>) => void
   sendChat: (text: string) => 'ok' | 'emergency'
+  requestClinicalReview: (reason: string) => void
   markEscalationReviewed: (id: string) => void
   addClinicalNote: (patientId: string, note: string) => void
   notes: Record<string, string[]>
@@ -181,17 +182,31 @@ const severePattern =
   /chest pain|can't breathe|cannot breathe|shortness of breath|suicid|unconscious|stroke|seizure|severe bleed|coughing blood|faint(ed|ing)|worst headache|not waking/i
 
 function vitaReply(text: string): string {
+  const stamp =
+    'AI-generated guidance — not a diagnosis. Vita will not confirm a cause or change your prescribed doses.\n\n'
   const lower = text.toLowerCase()
   if (lower.includes('headache')) {
-    return 'I heard a headache. A few clarifying questions — not a diagnosis:\n\n1. Did this start suddenly, or build over hours?\n2. Is there fever, neck stiffness, or vision change?\n3. Have you taken any of your usual medicines today?\n\nPossible causes can include tension, dehydration, or blood-pressure related pain. If pain is sudden and severe, or you have vision change, seek in-person care now. Otherwise rest, hydrate, and use the care plan your clinic approved.'
+    return (
+      stamp +
+      'Guidance tier: see a clinician if this is sudden and severe; otherwise self-care.\n\nClarifying questions:\n1. Did this start suddenly, or build over hours?\n2. Is there fever, neck stiffness, or vision change?\n3. Have you taken your usual medicines today?\n\nPossible explanations people discuss with a clinician include tension, dehydration, or blood-pressure related pain. None of these is confirmed here. If pain is sudden and severe, or vision changes, seek in-person care now. Otherwise rest, hydrate, and stay on the plan your clinic approved.'
+    )
   }
   if (lower.includes('cough') || lower.includes('cold') || lower.includes('fever')) {
-    return 'Thanks for sharing that. Clarifying questions:\n\n1. How many days has this lasted?\n2. Is there wheeze, chest tightness, or blood in sputum?\n3. Are you able to drink fluids and stay awake normally?\n\nPossible causes include a viral infection or an asthma flare. This is not a diagnosis. If breathing is hard, or you have chest pain, use Emergency. Otherwise self-care: rest, fluids, and contact your clinic if it lasts beyond 3 days or worsens.'
+    return (
+      stamp +
+      'Guidance tier: self-care for mild presentations; see a clinician within a few days if it lasts or worsens.\n\nClarifying questions:\n1. How many days has this lasted?\n2. Is there wheeze, chest tightness, or blood in sputum?\n3. Are you able to drink fluids and stay awake normally?\n\nThis is not a diagnosis. If breathing is hard, or you have chest pain, use Emergency. Otherwise rest, fluids, and contact your clinic if it lasts beyond 3 days.'
+    )
   }
   if (lower.includes('sugar') || lower.includes('dizzy') || lower.includes('glucose')) {
-    return 'I can help you think this through with your existing plan — I cannot diagnose.\n\n1. What was your last glucose reading, if you have one?\n2. Have you eaten and taken Metformin as scheduled?\n3. Any vomiting, confusion, or fainting?\n\nPossible causes include a missed meal, medication timing, or an illness. If you feel confused, faint, or cannot keep fluids down, seek urgent care. Otherwise follow your clinic’s hypo/hyper protocol and log the reading in Labs.'
+    return (
+      stamp +
+      'Guidance tier: follow your existing clinic protocol; seek urgent care if you feel confused or faint.\n\nClarifying questions:\n1. What was your last glucose reading, if you have one?\n2. Have you eaten and taken Metformin as scheduled?\n3. Any vomiting, confusion, or fainting?\n\nVita cannot diagnose the cause. If you feel confused, faint, or cannot keep fluids down, seek urgent care. Otherwise follow your clinic hypo/hyper protocol and log the reading in Labs.'
+    )
   }
-  return 'I can help you describe symptoms and next steps. I do not diagnose.\n\nA few clarifying questions:\n1. When did this start, and is it getting worse?\n2. Any chest pain, trouble breathing, bleeding, or fainting?\n3. Which medicines have you taken today?\n\nFrom here, Vita can suggest self-care that matches a typical clinic plan, or recommend seeing a clinician. If symptoms feel severe, use Emergency immediately.'
+  return (
+    stamp +
+    'Guidance tier: self-care if mild; see a clinician if this is getting worse; Emergency for chest pain, breathing trouble, or stroke signs.\n\nClarifying questions:\n1. When did this start, and is it getting worse?\n2. Any chest pain, trouble breathing, bleeding, or fainting?\n3. Which medicines have you taken today?\n\nIf the case is unclear, Vita defers to your clinic rather than guessing.'
+  )
 }
 
 export function VitaProvider({ children }: { children: ReactNode }) {
@@ -220,7 +235,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
     {
       id: 'c0',
       from: 'vita',
-      text: 'Hello Amara. Tell me what you are feeling in your own words, or tap the microphone. I will ask clarifying questions. I am not a diagnosis.',
+      text: 'AI-generated guidance — not a diagnosis.\n\nHello Amara. Describe symptoms in your own words, or tap the microphone. I will ask follow-up questions and sort this into self-care, see a clinician, or emergency. I will not confirm a cause or change your prescribed doses.',
     },
   ])
   const [clinicPatients] = useState(defaultPatients)
@@ -274,7 +289,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
             {
               id: `v${Date.now()}`,
               from: 'vita',
-              text: 'These symptoms need emergency care, not an AI chat. Redirecting you now.',
+              text: 'Emergency pattern detected independently of the chat. Stop here and follow emergency steps. This is not a diagnosis.',
             },
           ])
           setEscalations((current) => [
@@ -297,6 +312,20 @@ export function VitaProvider({ children }: { children: ReactNode }) {
           { id: `v${Date.now() + 1}`, from: 'vita', text: vitaReply(text) },
         ])
         return 'ok'
+      },
+      requestClinicalReview: (reason) => {
+        setEscalations((current) => [
+          {
+            id: `e${Date.now()}`,
+            patientId: 'p1',
+            patientName: profile.name || 'Amara Okafor',
+            type: 'clinical-review',
+            urgency: 'medium',
+            summary: reason,
+            reviewed: false,
+          },
+          ...current,
+        ])
       },
       markEscalationReviewed: (id) => {
         setEscalations((current) =>
