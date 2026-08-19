@@ -31,6 +31,7 @@ export function ButtonLink({
 }: {
   to: string
   children: ReactNode
+  className?: string
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline'
 }) {
   const styles = {
