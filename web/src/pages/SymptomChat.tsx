@@ -25,7 +25,7 @@ export function SymptomChat() {
     const result = await sendChat(text)
     setSending(false)
     if (result === 'emergency') navigate('/app/chat/emergency')
-    if (result === 'error') setError('Vita could not reach the AI service. Your clinic can still review this conversation.')
+    if (result === 'error') setError('AI is not configured on the server yet. Add GEMINI_API_KEY in Render Environment, or try again after the API wakes up.')
   }
 
   async function retry() {

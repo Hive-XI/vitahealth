@@ -70,13 +70,6 @@ function now() {
   return new Date().toISOString()
 }
 
-function daysAgo(days, hour = 8) {
-  const date = new Date()
-  date.setDate(date.getDate() - days)
-  date.setHours(hour, 0, 0, 0)
-  return date.toISOString()
-}
-
 function seedPatientRecords(database, user) {
   if (user.role !== 'patient' || user.patientId) return
   user.patientId = `p-${user.id.slice(0, 8)}`
@@ -96,18 +89,6 @@ function seedPatientRecords(database, user) {
     from: 'vita',
     text: "I'm Vita, your companion between visits. Tell me how you feel, or use the microphone.",
     createdAt: now(),
-  })
-  const starterMeds = [
-    ['Metformin', '500 mg', 'Twice daily', '08:00'],
-    ['Lisinopril', '10 mg', 'Once daily', '08:00'],
-    ['Amlodipine', '5 mg', 'Once daily', '20:00'],
-  ]
-  starterMeds.forEach(([name, dosage, frequency, reminder], index) => {
-    const medicationId = crypto.randomUUID()
-    database.medications.push({ id: medicationId, patientId: user.patientId, name, dosage, frequency, reminder, verified: false })
-    for (let day = 0; day < 7; day += 1) {
-      if ((day + index) % 4 !== 0) database.medicationEvents.push({ id: crypto.randomUUID(), patientId: user.patientId, medicationId, status: 'taken', occurredAt: daysAgo(day, Number(reminder.slice(0, 2))), source: 'system' })
-    }
   })
 }
 
@@ -179,7 +160,14 @@ function requireUser(handler) {
   }
 }
 
-app.get('/api/health', (_request, response) => response.json({ ok: true }))
+app.get('/api/health', (_request, response) =>
+  response.json({
+    ok: true,
+    aiConfigured: Boolean(
+      process.env.GEMINI_API_KEY && !process.env.GEMINI_API_KEY.startsWith('replace-'),
+    ),
+  }),
+)
 
 app.post('/api/auth/signup', async (request, response) => {
   const { email, password, role = 'patient', language = 'English' } = request.body ?? {}

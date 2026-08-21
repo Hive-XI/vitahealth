@@ -20,6 +20,7 @@ export function Auth() {
     authMethod,
     setAuthMethod,
     logout,
+    refreshWorkspace,
   } = useVita()
   const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [password, setPassword] = useState('')
@@ -53,6 +54,7 @@ export function Auth() {
       setLanguage(result.user.language)
       setIdentifier(result.user.email)
       setRole(result.user.role)
+      await refreshWorkspace()
       if (result.user.role === 'clinic') navigate('/clinic')
       else navigate(mode === 'signup' ? '/consent' : '/app')
     } catch {

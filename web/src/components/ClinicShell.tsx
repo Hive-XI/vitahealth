@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { ClipboardList, LayoutGrid, Users } from 'lucide-react'
+import { ClipboardList, LayoutGrid } from 'lucide-react'
 import { Logo } from './Logo'
 import { BrandAtmosphere } from './BrandStage'
 import { LogoutButton } from './LogoutButton'
@@ -7,7 +7,6 @@ import { LogoutButton } from './LogoutButton'
 const items = [
   { to: '/clinic', label: 'Dashboard', icon: LayoutGrid, end: true },
   { to: '/clinic/queue', label: 'Escalation queue', icon: ClipboardList },
-  { to: '/clinic/patients/p1', label: 'Patient detail', icon: Users },
 ]
 
 export function ClinicShell() {

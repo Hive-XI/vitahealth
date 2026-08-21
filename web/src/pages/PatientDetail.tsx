@@ -7,7 +7,18 @@ export function PatientDetail() {
   const { id } = useParams()
   const { clinicPatients, patientRecords, notes, addClinicalNote } =
     useVita()
-  const patient = clinicPatients.find((item) => item.id === id) ?? clinicPatients[0]
+  const patient = clinicPatients.find((item) => item.id === id)
+  if (!patient) {
+    return (
+      <div className="grid gap-4">
+        <h1 className="font-display text-4xl font-bold">Patient not found</h1>
+        <p className="font-medium text-white/90">
+          Open a patient from the clinic dashboard. Registered patients appear
+          there after they sign up and complete their profile.
+        </p>
+      </div>
+    )
+  }
   const record = patientRecords[patient.id]
   const labs = record?.labs ?? []
   const medications = record?.medications ?? []

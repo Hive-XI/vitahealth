@@ -47,155 +47,19 @@ type VitaState = {
   updateEscalation: (id: string, status: Escalation['status']) => void
   addClinicalNote: (patientId: string, note: string) => void
   notes: Record<string, string[]>
+  refreshWorkspace: () => Promise<void>
   logout: () => void
 }
 
-const defaultMeds: Medication[] = [
-  {
-    id: 'm1',
-    name: 'Metformin',
-    dosage: '500 mg',
-    frequency: 'Twice daily',
-    reminder: '08:00',
-    status: 'taken',
-  },
-  {
-    id: 'm2',
-    name: 'Lisinopril',
-    dosage: '10 mg',
-    frequency: 'Once daily',
-    reminder: '08:00',
-    status: 'due',
-  },
-  {
-    id: 'm3',
-    name: 'Amlodipine',
-    dosage: '5 mg',
-    frequency: 'Once daily',
-    reminder: '20:00',
-    status: 'due',
-  },
-]
-
-const defaultLabs: LabResult[] = [
-  {
-    id: 'l1',
-    name: 'HbA1c',
-    value: '8.2',
-    unit: '%',
-    range: 'Below 7.0%',
-    flagged: true,
-    note: 'Above the report range. A clinician should review.',
-  },
-  {
-    id: 'l2',
-    name: 'LDL cholesterol',
-    value: '2.4',
-    unit: 'mmol/L',
-    range: 'Below 2.6 mmol/L',
-    flagged: false,
-    note: 'Within the report range.',
-  },
-  {
-    id: 'l3',
-    name: 'Creatinine',
-    value: '78',
-    unit: 'µmol/L',
-    range: '45–90 µmol/L',
-    flagged: false,
-    note: 'Within the report range.',
-  },
-]
-
-const defaultPatients: ClinicPatient[] = [
-  {
-    id: 'p1',
-    name: 'Amara Okafor',
-    age: 34,
-    adherence: 67,
-    conditions: 'Type 2 diabetes, hypertension',
-    lastContact: 'Today',
-    risk: 'Missed evening dose · flagged HbA1c',
-  },
-  {
-    id: 'p2',
-    name: 'Kwame Mensah',
-    age: 58,
-    adherence: 91,
-    conditions: 'Heart failure',
-    lastContact: 'Yesterday',
-    risk: 'Stable',
-  },
-  {
-    id: 'p3',
-    name: 'Fatima Diallo',
-    age: 41,
-    adherence: 42,
-    conditions: 'Asthma, pregnancy follow-up',
-    lastContact: '3 days ago',
-    risk: 'Two missed inhaler doses',
-  },
-  {
-    id: 'p4',
-    name: 'Joseph Adeyemi',
-    age: 67,
-    adherence: 78,
-    conditions: 'CKD stage 3',
-    lastContact: 'Today',
-    risk: 'Creatinine flagged last week',
-  },
-]
-
-const defaultEscalations: Escalation[] = [
-  {
-    id: 'e1',
-    patientId: 'p1',
-    patientName: 'Amara Okafor',
-    type: 'flagged-lab',
-    urgency: 'high',
-    summary: 'HbA1c 8.2% — above report range. Follow-up suggested.',
-    reviewed: false,
-    status: 'new',
-    createdAt: '2026-08-21T09:00:00.000Z',
-    contactAttempts: 0,
-  },
-  {
-    id: 'e2',
-    patientId: 'p3',
-    patientName: 'Fatima Diallo',
-    type: 'missed-dose',
-    urgency: 'high',
-    summary: 'Inhaler marked skipped twice in 48 hours.',
-    reviewed: false,
-    status: 'assigned',
-    createdAt: '2026-08-20T15:00:00.000Z',
-    contactAttempts: 0,
-  },
-  {
-    id: 'e3',
-    patientId: 'p4',
-    patientName: 'Joseph Adeyemi',
-    type: 'flagged-lab',
-    urgency: 'medium',
-    summary: 'Creatinine previously out of range. Review pending.',
-    reviewed: false,
-    status: 'waiting-for-patient',
-    createdAt: '2026-08-19T11:00:00.000Z',
-    contactAttempts: 1,
-  },
-  {
-    id: 'e4',
-    patientId: 'p2',
-    patientName: 'Kwame Mensah',
-    type: 'missed-dose',
-    urgency: 'low',
-    summary: 'One evening diuretic delayed, later taken.',
-    reviewed: true,
-    status: 'resolved',
-    createdAt: '2026-08-18T13:00:00.000Z',
-    contactAttempts: 1,
-  },
-]
+const emptyProfile: Profile = {
+  name: '',
+  age: '',
+  conditions: '',
+  medications: '',
+  caregiver: '',
+  language: 'English',
+  notifications: true,
+}
 
 const VitaContext = createContext<VitaState | null>(null)
 
@@ -237,21 +101,11 @@ export function VitaProvider({ children }: { children: ReactNode }) {
   const [consentAi, setConsentAi] = useState(false)
   const [consentData, setConsentData] = useState(false)
   const [demoBooked, setDemoBooked] = useState(false)
-  const [notes, setNotes] = useState<Record<string, string[]>>({
-    p1: ['Patient reports evening dose fatigue. Review BP meds at next visit.'],
-  })
-  const [profile, setProfile] = useState<Profile>({
-    name: 'Amara Okafor',
-    age: '34',
-    conditions: 'Type 2 diabetes, hypertension',
-    medications: 'Metformin 500 mg, Lisinopril 10 mg, Amlodipine 5 mg',
-    caregiver: '',
-    language: 'English',
-    notifications: true,
-  })
-  const [medications, setMedications] = useState(defaultMeds)
+  const [notes, setNotes] = useState<Record<string, string[]>>({})
+  const [profile, setProfile] = useState<Profile>(emptyProfile)
+  const [medications, setMedications] = useState<Medication[]>([])
   const [medicationEvents, setMedicationEvents] = useState<MedicationEvent[]>([])
-  const [labs, setLabs] = useState(defaultLabs)
+  const [labs, setLabs] = useState<LabResult[]>([])
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'c0',
@@ -259,30 +113,59 @@ export function VitaProvider({ children }: { children: ReactNode }) {
       text: "I'm Vita, your companion between visits. Tell me how you feel, or use the microphone.",
     },
   ])
-  const [clinicPatients, setClinicPatients] = useState(defaultPatients)
-  const [escalations, setEscalations] = useState(defaultEscalations)
+  const [clinicPatients, setClinicPatients] = useState<ClinicPatient[]>([])
+  const [escalations, setEscalations] = useState<Escalation[]>([])
   const [appointments, setAppointments] = useState<Appointment[]>([])
-  const [patientRecords, setPatientRecords] = useState<Record<string, { medications: Medication[]; labs: LabResult[]; messages: ChatMessage[]; notes: { note: string }[]; appointments: Appointment[] }>>({})
+  const [patientRecords, setPatientRecords] = useState<
+    Record<
+      string,
+      {
+        medications: Medication[]
+        labs: LabResult[]
+        messages: ChatMessage[]
+        notes: { note: string }[]
+        appointments: Appointment[]
+      }
+    >
+  >({})
 
-  useEffect(() => {
+  async function refreshWorkspace() {
     const token = window.localStorage.getItem('vita.token')
     if (!token) return
-    fetch('/api/me', { headers: { Authorization: `Bearer ${token}` } })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((payload) => {
-        if (!payload) return
-        if (payload.profile) setProfile(payload.profile)
-        if (payload.medications?.length) setMedications(payload.medications)
-        if (payload.medicationEvents) setMedicationEvents(payload.medicationEvents)
-        if (payload.labs?.length) setLabs(payload.labs)
-        if (payload.messages?.length) setMessages(payload.messages)
-        if (payload.escalations) setEscalations(payload.escalations)
-        if (payload.appointments) setAppointments(payload.appointments)
-        if (payload.clinicPatients) setClinicPatients(payload.clinicPatients)
-        if (payload.patientRecords) setPatientRecords(payload.patientRecords)
+    try {
+      const response = await fetch('/api/me', {
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch(() => undefined)
-  }, [identifier])
+      if (!response.ok) return
+      const payload = await response.json()
+      if (payload.user?.role) setRole(payload.user.role)
+      if (payload.user?.language) setLanguage(payload.user.language)
+      if (payload.user?.email) setIdentifier(payload.user.email)
+      if (payload.profile) setProfile(payload.profile)
+      setMedications(payload.medications ?? [])
+      setMedicationEvents(payload.medicationEvents ?? [])
+      setLabs(payload.labs ?? [])
+      if (payload.messages?.length) setMessages(payload.messages)
+      setEscalations(payload.escalations ?? [])
+      setAppointments(payload.appointments ?? [])
+      setClinicPatients(payload.clinicPatients ?? [])
+      setPatientRecords(payload.patientRecords ?? {})
+      if (payload.notes) {
+        const byPatient: Record<string, string[]> = {}
+        for (const item of payload.notes as { patientId: string; note: string }[]) {
+          byPatient[item.patientId] ??= []
+          byPatient[item.patientId].push(item.note)
+        }
+        setNotes(byPatient)
+      }
+    } catch {
+      /* keep current workspace if API is briefly unavailable */
+    }
+  }
+
+  useEffect(() => {
+    void refreshWorkspace()
+  }, [])
 
   const value = useMemo<VitaState>(
     () => ({
@@ -475,7 +358,24 @@ export function VitaProvider({ children }: { children: ReactNode }) {
         setConsentAi(false)
         setConsentData(false)
         setRole('patient')
+        setProfile(emptyProfile)
+        setMedications([])
+        setMedicationEvents([])
+        setLabs([])
+        setClinicPatients([])
+        setEscalations([])
+        setAppointments([])
+        setPatientRecords({})
+        setNotes({})
+        setMessages([
+          {
+            id: 'c0',
+            from: 'vita',
+            text: "I'm Vita, your companion between visits. Tell me how you feel, or use the microphone.",
+          },
+        ])
       },
+      refreshWorkspace,
     }),
     [
       role,
