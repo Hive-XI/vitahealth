@@ -10,6 +10,13 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Proxy API calls to the Render Express service (must be above the SPA rule).
+[[redirects]]
+  from = "/api/*"
+  to = "https://vitahealth-8o9h.onrender.com/api/:splat"
+  status = 200
+  force = true
+
 # SPA fallback for React Router. Deep links 404 without this.
 [[redirects]]
   from = "/*"
