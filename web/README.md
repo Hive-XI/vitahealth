@@ -1,23 +1,24 @@
 # Vita Health web app
 
-This folder contains the Vite + React app and a small local API. From here:
+This directory contains the Vite frontend and the local Express API for Vita Health.
 
 ```bash
 npm install
-npm run dev
-```
-
-Open http://localhost:5173
-
-For real sign-up, login, and Gemini chat during local development, use:
-
-```bash
 npm run dev:all
 ```
 
-The API listens on http://localhost:8787 and stores development data in `data/db.json`.
-Copy a newly rotated Gemini key into `.env` as `GEMINI_API_KEY`. The browser never receives this key. `GEMINI_MODEL` defaults to `gemini-2.5-flash`.
+- Frontend: http://localhost:5173
+- API: http://localhost:8787
+- Local records: `data/db.json`
 
-This JSON store is suitable for a local prototype only. Netlify's deployed functions need a hosted database and secret environment variables for real users and production traffic.
+Configure live Gemini chat in `.env`:
 
-Netlify, repo layout, and demo paths: see the [root README](../README.md).
+```dotenv
+GEMINI_API_KEY=your-new-gemini-key
+GEMINI_MODEL=gemini-2.5-flash
+PORT=8787
+```
+
+The API keeps the Gemini key server-side. The JSON database is for local demos only and must be replaced with managed persistence before production deployment.
+
+For the complete product overview, architecture notes, demo flow, API routes, security boundaries, and deployment guidance, see the [root README](../README.md).
