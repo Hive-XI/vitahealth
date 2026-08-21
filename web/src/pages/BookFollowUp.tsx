@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Card, Field, inputClass } from '../components/ui'
+import { useVita } from '../context'
 
 const clinics = [
   'St. Mary’s District Hospital',
@@ -13,9 +14,11 @@ export function BookFollowUp() {
   const [clinic, setClinic] = useState(clinics[0])
   const [when, setWhen] = useState('Tomorrow morning')
   const [sent, setSent] = useState(false)
+  const { requestAppointment } = useVita()
 
-  function confirm(event: FormEvent) {
+  async function confirm(event: FormEvent) {
     event.preventDefault()
+    await requestAppointment(clinic, when)
     setSent(true)
     window.setTimeout(() => navigate('/app'), 1200)
   }

@@ -113,7 +113,6 @@ function seedPatientRecords(database, user) {
 
 function clinicPatients(database) {
   return database.profiles.map((profile) => {
-    const medications = database.medications.filter((item) => item.patientId === profile.patientId)
     const events = database.medicationEvents.filter((item) => item.patientId === profile.patientId)
     const taken = events.filter((item) => item.status === 'taken').length
     const adherence = events.length ? Math.round((taken / events.length) * 100) : 0
@@ -220,6 +219,7 @@ app.get('/api/me', requireUser(async (request, response, database) => {
     clinicPatients: clinicPatients(database),
     escalations: database.escalations,
     notes: database.notes,
+    appointments: database.appointments,
     patientRecords: Object.fromEntries(database.profiles.map((profile) => [profile.patientId, patientPayload(database, profile.patientId)])),
   })
 }))

@@ -36,11 +36,12 @@ type VitaState = {
   markMedication: (id: string, status: Medication['status']) => void
   addMedication: (med: Omit<Medication, 'id' | 'status'>) => void
   addLab: (lab: Omit<LabResult, 'id'>) => void
+  requestAppointment: (clinic: string, preferredTime: string) => Promise<void>
   medicationEvents: MedicationEvent[]
   appointments: Appointment[]
   timeline: TimelineEvent[]
-  patientRecords: Record<string, { medications: Medication[]; labs: LabResult[]; messages: ChatMessage[]; notes: { note: string }[] }>
-  sendChat: (text: string) => Promise<'ok' | 'emergency'>
+  patientRecords: Record<string, { medications: Medication[]; labs: LabResult[]; messages: ChatMessage[]; notes: { note: string }[]; appointments: Appointment[] }>
+  sendChat: (text: string) => Promise<'ok' | 'emergency' | 'error'>
   requestClinicalReview: (reason: string) => void
   markEscalationReviewed: (id: string) => void
   updateEscalation: (id: string, status: Escalation['status']) => void
@@ -261,7 +262,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
   const [clinicPatients, setClinicPatients] = useState(defaultPatients)
   const [escalations, setEscalations] = useState(defaultEscalations)
   const [appointments, setAppointments] = useState<Appointment[]>([])
-  const [patientRecords, setPatientRecords] = useState<Record<string, { medications: Medication[]; labs: LabResult[]; messages: ChatMessage[]; notes: { note: string }[] }>>({})
+  const [patientRecords, setPatientRecords] = useState<Record<string, { medications: Medication[]; labs: LabResult[]; messages: ChatMessage[]; notes: { note: string }[]; appointments: Appointment[] }>>({})
 
   useEffect(() => {
     const token = window.localStorage.getItem('vita.token')
@@ -385,6 +386,18 @@ export function VitaProvider({ children }: { children: ReactNode }) {
           setLabs((current) => [lab, ...current])
         }
       },
+      requestAppointment: async (clinic, preferredTime) => {
+        const token = window.localStorage.getItem('vita.token')
+        const response = await fetch('/api/appointments', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+          body: JSON.stringify({ clinic, preferredTime }),
+        })
+        if (response.ok) {
+          const appointment = await response.json()
+          setAppointments((current) => [...current, appointment])
+        }
+      },
       sendChat: async (text) => {
         if (severePattern.test(text)) {
           setMessages((current) => [
@@ -421,6 +434,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
               index === current.length - 1 ? { ...message, text: reply } : message,
             ),
           )
+          return result.ok && payload.text ? 'ok' : 'error'
         } catch {
           setMessages((current) =>
             current.map((message, index) =>
@@ -429,8 +443,8 @@ export function VitaProvider({ children }: { children: ReactNode }) {
                 : message,
             ),
           )
+          return 'error'
         }
-        return 'ok'
       },
       requestClinicalReview: (reason) => {
         void fetch('/api/escalations', { method: 'POST', headers: { 'content-type': 'application/json', Authorization: `Bearer ${window.localStorage.getItem('vita.token')}` }, body: JSON.stringify({ type: 'clinical-review', urgency: 'medium', summary: reason }) })
