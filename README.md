@@ -21,7 +21,7 @@ The Vite + React app is in **`web/`**. Repo root is config and this README.
 ```bash
 cd web
 npm install
-npm run dev
+npm run dev:all
 ```
 
 Open http://localhost:5173
