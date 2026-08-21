@@ -4,7 +4,7 @@ import { Card } from '../components/ui'
 import { adherencePercent, useVita } from '../context'
 
 export function PatientDashboard() {
-  const { profile, medications, labs } = useVita()
+  const { profile, medications, labs, timeline } = useVita()
   const percent = adherencePercent(medications)
   const due = medications.filter((med) => med.status === 'due')
   const flagged = labs.filter((lab) => lab.flagged)
@@ -85,6 +85,28 @@ export function PatientDashboard() {
           </Link>
         ))}
       </nav>
+
+      <Card>
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h2 className="font-display text-lg font-semibold">Your care timeline</h2>
+            <p className="mt-1 text-sm text-muted">A shared record between you and your clinic.</p>
+          </div>
+          <span className="rounded-full bg-navy/10 px-2.5 py-1 text-xs font-semibold text-navy">Live record</span>
+        </div>
+        <ol className="mt-4 grid gap-4 border-l border-line pl-4">
+          {timeline.slice(0, 5).map((event) => (
+            <li key={event.id} className="relative">
+              <span className="absolute -left-[21px] top-1 size-2 rounded-full bg-burgundy" />
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+                {event.type} · {new Date(event.occurredAt).toLocaleDateString()}
+              </p>
+              <p className="mt-1 font-semibold">{event.title}</p>
+              <p className="text-sm text-muted">{event.description}</p>
+            </li>
+          ))}
+        </ol>
+      </Card>
     </div>
   )
 }

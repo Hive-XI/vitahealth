@@ -2,8 +2,17 @@ import { Button, ButtonLink, Card } from '../components/ui'
 import { adherencePercent, useVita } from '../context'
 
 export function Meds() {
-  const { medications, markMedication } = useVita()
+  const { medications, medicationEvents, markMedication } = useVita()
   const percent = adherencePercent(medications)
+  const days = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date()
+    date.setDate(date.getDate() - (6 - index))
+    const key = date.toISOString().slice(0, 10)
+    const taken = medicationEvents.filter(
+      (event) => event.occurredAt.slice(0, 10) === key && event.status === 'taken',
+    ).length
+    return { label: date.toLocaleDateString('en', { weekday: 'short' }), value: medications.length ? Math.round((taken / medications.length) * 100) : 0 }
+  })
 
   return (
     <div className="grid gap-4">
@@ -61,11 +70,24 @@ export function Meds() {
         </Card>
       ))}
       <Card>
-        <h2 className="font-display text-lg font-semibold">History</h2>
-        <p className="mt-2 text-sm text-muted">
-          This week: {percent}%. Three missed doses in a row flag the clinic.
-          Doses stay as your clinician prescribed.
-        </p>
+        <div className="flex items-end justify-between gap-3">
+          <div>
+            <h2 className="font-display text-lg font-semibold">Weekly adherence</h2>
+            <p className="mt-1 text-sm text-muted">Dated dose history, not just a current status.</p>
+          </div>
+          <span className="text-2xl font-semibold text-navy">{percent}%</span>
+        </div>
+        <div className="mt-5 grid grid-cols-7 items-end gap-2" aria-label="Seven day adherence chart">
+          {days.map((day) => (
+            <div key={day.label} className="grid gap-2 text-center text-xs text-muted">
+              <div className="flex h-24 items-end justify-center rounded-lg bg-line/60">
+                <div className="w-full rounded-lg bg-navy" style={{ height: `${Math.max(day.value, 6)}%` }} title={`${day.value}%`} />
+              </div>
+              <span>{day.label}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-sm text-muted">Reminder history is recorded when you mark a dose taken or skipped.</p>
       </Card>
     </div>
   )

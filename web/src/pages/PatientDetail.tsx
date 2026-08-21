@@ -5,9 +5,13 @@ import { useVita } from '../context'
 
 export function PatientDetail() {
   const { id } = useParams()
-  const { clinicPatients, labs, medications, messages, notes, addClinicalNote } =
+  const { clinicPatients, patientRecords, notes, addClinicalNote } =
     useVita()
   const patient = clinicPatients.find((item) => item.id === id) ?? clinicPatients[0]
+  const record = patientRecords[patient.id]
+  const labs = record?.labs ?? []
+  const medications = record?.medications ?? []
+  const messages = record?.messages ?? []
   const [note, setNote] = useState('')
   const history = notes[patient.id] ?? []
 

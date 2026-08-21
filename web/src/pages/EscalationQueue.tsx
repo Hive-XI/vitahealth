@@ -5,7 +5,7 @@ import { useVita } from '../context'
 const urgencyRank = { high: 0, medium: 1, low: 2 }
 
 export function EscalationQueue() {
-  const { escalations, markEscalationReviewed } = useVita()
+  const { escalations, updateEscalation } = useVita()
   const sorted = [...escalations].sort(
     (a, b) =>
       Number(a.reviewed) - Number(b.reviewed) ||
@@ -28,24 +28,26 @@ export function EscalationQueue() {
               </h2>
               <p className="mt-1 text-sm text-muted">{item.summary}</p>
             </div>
-            {item.reviewed ? (
-              <span className="rounded-full bg-navy/10 px-2.5 py-1 text-xs font-semibold text-navy">
-                Reviewed
-              </span>
-            ) : (
-              <span className="rounded-full bg-burgundy/10 px-2.5 py-1 text-xs font-semibold text-burgundy">
-                Needs review
-              </span>
-            )}
+            <span className="rounded-full bg-navy/10 px-2.5 py-1 text-xs font-semibold text-navy">
+              {item.status.replaceAll('-', ' ')}
+            </span>
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
-            <Button
-              type="button"
-              variant="secondary"
-              disabled={item.reviewed}
-              onClick={() => markEscalationReviewed(item.id)}
+            <select
+              aria-label={`Update ${item.patientName} escalation status`}
+              className="min-h-11 rounded-xl border border-line bg-white px-3 text-sm font-semibold capitalize text-navy"
+              value={item.status}
+              onChange={(event) => updateEscalation(item.id, event.target.value as typeof item.status)}
             >
-              Mark as reviewed
+              <option value="new">New</option>
+              <option value="assigned">Assigned</option>
+              <option value="contact-attempted">Contact attempted</option>
+              <option value="waiting-for-patient">Waiting for patient</option>
+              <option value="resolved">Resolved</option>
+              <option value="escalated-to-clinician">Escalated to clinician</option>
+            </select>
+            <Button type="button" variant="secondary" onClick={() => updateEscalation(item.id, 'contact-attempted')}>
+              Log contact attempt
             </Button>
             <a
               href="tel:+2348001112222"
