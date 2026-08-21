@@ -21,7 +21,7 @@
   "profiles": [
     {
       "patientId": "p-d5569845",
-      "name": "New Vita patient",
+      "name": "Johnson",
       "age": "",
       "conditions": "",
       "medications": "",
@@ -187,6 +187,38 @@
       "status": "taken",
       "occurredAt": "2026-08-16T19:00:00.000Z",
       "source": "system"
+    },
+    {
+      "id": "b26b6b46-8183-46b9-a560-5b93e76f7645",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-21T15:50:16.893Z",
+      "source": "patient"
+    },
+    {
+      "id": "6d12884d-0376-4312-b09d-e12a1850b246",
+      "patientId": "p-d5569845",
+      "medicationId": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "status": "skipped",
+      "occurredAt": "2026-08-21T15:50:18.551Z",
+      "source": "patient"
+    },
+    {
+      "id": "37ef531f-12ea-4938-8b3a-222a04d67d61",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "taken",
+      "occurredAt": "2026-08-21T15:50:20.876Z",
+      "source": "patient"
+    },
+    {
+      "id": "345ff94d-ce34-4c2c-b500-fc691eced82a",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "skipped",
+      "occurredAt": "2026-08-21T15:50:23.174Z",
+      "source": "patient"
     }
   ],
   "labs": [],

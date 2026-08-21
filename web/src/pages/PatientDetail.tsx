@@ -25,7 +25,7 @@ export function PatientDetail() {
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-6">
       <header>
         <h1 className="font-display text-4xl font-bold">{patient.name}</h1>
         <p className="font-medium text-white/90">
@@ -44,6 +44,7 @@ export function PatientDetail() {
           </button>
         ))}
       </nav>
+      <div className={tab === 'overview' ? 'grid gap-4 lg:grid-cols-2' : ''}>
       {tab === 'overview' || tab === 'medications' ? <Card>
         <h2 className="font-display text-lg font-semibold">
           {tab === 'overview' ? 'Adherence history' : 'Medication plan'}
@@ -80,6 +81,7 @@ export function PatientDetail() {
             ))}
         </ul>
       </Card> : null}
+      </div>
       {tab === 'timeline' ? <Card>
         <h2 className="font-display text-lg font-semibold">Longitudinal timeline</h2>
         <ol className="mt-3 grid gap-4 border-l border-line pl-4 text-sm">

@@ -46,7 +46,7 @@ export function SymptomChat() {
   }
 
   return (
-    <div className="flex min-h-[70vh] flex-col">
+    <div className="mx-auto flex min-h-[70vh] w-full max-w-5xl flex-col">
       <h1 className="font-display text-3xl font-bold">Symptom guidance</h1>
       <p className="text-sm font-medium text-white/90">
         AI guidance between visits. For severe symptoms, use Emergency.
@@ -63,7 +63,7 @@ export function SymptomChat() {
           </button>
         ))}
       </div>
-      <ol className="mt-4 flex flex-1 flex-col gap-3">
+      <ol className="mt-4 flex min-h-[22rem] flex-1 flex-col gap-3 overflow-y-auto rounded-2xl bg-black/10 p-4 lg:min-h-[32rem] lg:px-8">
         {messages.map((message) => (
           <li
             key={message.id}
@@ -90,7 +90,7 @@ export function SymptomChat() {
           <Button type="button" variant="secondary" className="shrink-0 px-3 text-xs" onClick={retry}>Retry</Button>
         </div>
       ) : null}
-      <div className="mt-4 flex gap-2">
+      <div className="mt-4 flex gap-2 lg:max-w-2xl">
         <ButtonLink to="/app/chat/emergency" variant="danger" className="flex-1">
           Emergency
         </ButtonLink>
@@ -113,7 +113,7 @@ export function SymptomChat() {
           Review requested. On the clinic queue.
         </p>
       ) : null}
-      <form onSubmit={submit} className="mt-3 flex gap-2">
+      <form onSubmit={submit} className="mt-3 flex gap-2 lg:max-w-4xl">
         <label htmlFor="chat" className="sr-only">
           Message
         </label>

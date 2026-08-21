@@ -15,7 +15,7 @@ export function Meds() {
   })
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-6">
       <div className="flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-left">
         <div>
           <h1 className="font-display text-4xl font-bold">
@@ -29,8 +29,9 @@ export function Meds() {
           Add
         </ButtonLink>
       </div>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {medications.map((med) => (
-        <Card key={med.id}>
+        <Card key={med.id} className="flex flex-col">
           <div className="flex items-start justify-between gap-3">
             <div>
               <h2 className="font-display text-lg font-semibold">{med.name}</h2>
@@ -50,7 +51,7 @@ export function Meds() {
               {med.status}
             </span>
           </div>
-          <div className="mt-4 flex gap-2">
+          <div className="mt-auto flex gap-2 pt-5">
             <Button
               type="button"
               className="flex-1"
@@ -69,6 +70,7 @@ export function Meds() {
           </div>
         </Card>
       ))}
+        </div>
       <Card>
         <div className="flex items-end justify-between gap-3">
           <div>

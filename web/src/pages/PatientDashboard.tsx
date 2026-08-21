@@ -17,7 +17,7 @@ export function PatientDashboard() {
   const careStatus = flagged.length > 0 ? 'Clinic review recommended' : due.length > 0 ? 'One step at a time' : 'Care plan on track'
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-6">
       <header className="text-center md:text-left">
         <p className="text-sm font-medium text-white/90">{greeting} · Today</p>
         <h1 className="font-display text-4xl font-bold">
@@ -26,7 +26,7 @@ export function PatientDashboard() {
         <p className="mt-2 text-sm font-medium text-white/85">Your care plan, reminders, and clinic support in one place.</p>
       </header>
 
-      <Card className="bg-white/95">
+      <Card className="bg-white/95 lg:col-span-2">
         <div className="flex items-start gap-3">
           <span className="grid size-10 shrink-0 place-items-center rounded-full bg-navy/10 text-navy">
             <CheckCircle2 className="size-5" aria-hidden />
@@ -44,7 +44,7 @@ export function PatientDashboard() {
         </div>
       </Card>
 
-      <Card>
+      <Card className="lg:col-span-2">
         <p className="text-sm text-muted">Adherence this week</p>
         <p className="mt-1 text-4xl font-semibold text-navy">{percent}%</p>
         <p className="mt-1 text-sm text-muted">
@@ -59,6 +59,7 @@ export function PatientDashboard() {
         </div>
       </Card>
 
+      <div className="grid gap-4 lg:grid-cols-2">
       {due.length > 0 ? (
         <Card>
           <h2 className="font-display text-lg font-semibold">Still due</h2>
@@ -93,6 +94,7 @@ export function PatientDashboard() {
           </Link>
         </Card>
       ) : null}
+      </div>
 
       {nextAppointment ? (
         <Card>
@@ -109,7 +111,7 @@ export function PatientDashboard() {
         </Card>
       ) : null}
 
-      <nav aria-label="Shortcuts" className="grid grid-cols-2 gap-3">
+      <nav aria-label="Shortcuts" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           { to: '/app/chat', label: 'Guidance', icon: MessageCircle },
           { to: '/app/meds', label: 'Meds', icon: Pill },
@@ -127,7 +129,7 @@ export function PatientDashboard() {
         ))}
       </nav>
 
-      <Card>
+      <Card className="lg:col-span-2">
         <div className="flex items-center justify-between gap-3">
           <div>
             <h2 className="font-display text-lg font-semibold">Your care timeline</h2>
