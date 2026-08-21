@@ -33,7 +33,7 @@ type VitaState = {
   markMedication: (id: string, status: Medication['status']) => void
   addMedication: (med: Omit<Medication, 'id' | 'status'>) => void
   addLab: (lab: Omit<LabResult, 'id'>) => void
-  sendChat: (text: string) => 'ok' | 'emergency'
+  sendChat: (text: string) => Promise<'ok' | 'emergency'>
   requestClinicalReview: (reason: string) => void
   markEscalationReviewed: (id: string) => void
   addClinicalNote: (patientId: string, note: string) => void
@@ -280,7 +280,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
       addLab: (lab) => {
         setLabs((current) => [{ ...lab, id: `l${Date.now()}` }, ...current])
       },
-      sendChat: (text) => {
+      sendChat: async (text) => {
         if (severePattern.test(text)) {
           setMessages((current) => [
             ...current,
@@ -308,8 +308,34 @@ export function VitaProvider({ children }: { children: ReactNode }) {
         setMessages((current) => [
           ...current,
           { id: `u${Date.now()}`, from: 'user', text },
-          { id: `v${Date.now() + 1}`, from: 'vita', text: vitaReply(text) },
+          { id: `v${Date.now() + 1}`, from: 'vita', text: 'Vita is thinking…' },
         ])
+        try {
+          const token = window.localStorage.getItem('vita.token')
+          const result = await fetch('/api/ai/chat', {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+            body: JSON.stringify({ message: text, language }),
+          })
+          const payload = (await result.json()) as { text?: string; error?: string }
+          const reply = result.ok && payload.text ? payload.text : payload.error ?? vitaReply(text)
+          setMessages((current) =>
+            current.map((message, index) =>
+              index === current.length - 1 ? { ...message, text: reply } : message,
+            ),
+          )
+        } catch {
+          setMessages((current) =>
+            current.map((message, index) =>
+              index === current.length - 1
+                ? { ...message, text: vitaReply(text) }
+                : message,
+            ),
+          )
+        }
         return 'ok'
       },
       requestClinicalReview: (reason) => {
@@ -340,6 +366,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
         }))
       },
       logout: () => {
+        window.localStorage.removeItem('vita.token')
         setIdentifier('')
         setAuthMethod('email')
         setConsentAi(false)

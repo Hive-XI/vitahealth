@@ -11,11 +11,11 @@ export function SymptomChat() {
   const [listening, setListening] = useState(false)
   const [reviewSent, setReviewSent] = useState(false)
 
-  function submit(event?: FormEvent) {
+  async function submit(event?: FormEvent) {
     event?.preventDefault()
     const text = draft.trim()
     if (!text) return
-    const result = sendChat(text)
+    const result = await sendChat(text)
     setDraft('')
     if (result === 'emergency') navigate('/app/chat/emergency')
   }

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { BrandAtmosphere, PlusField } from '../components/BrandStage'
@@ -20,10 +21,50 @@ export function Auth() {
     setAuthMethod,
     logout,
   } = useVita()
+  const [mode, setMode] = useState<'login' | 'signup'>('login')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  function continueOn() {
-    if (role === 'clinic') navigate('/clinic')
-    else navigate('/consent')
+  async function continueOn() {
+    setError('')
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/auth/${mode}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          email: identifier,
+          password,
+          role,
+          language,
+        }),
+      })
+      const result = (await response.json()) as {
+        token?: string
+        error?: string
+        user?: { role: 'patient' | 'clinic'; language: string; email: string }
+      }
+      if (!response.ok || !result.token || !result.user) {
+        setError(result.error ?? 'Unable to authenticate. Try again.')
+        return
+      }
+      window.localStorage.setItem('vita.token', result.token)
+      setLanguage(result.user.language)
+      setIdentifier(result.user.email)
+      setRole(result.user.role)
+      if (result.user.role === 'clinic') navigate('/clinic')
+      else navigate(mode === 'signup' ? '/consent' : '/app')
+    } catch {
+      setError('The server is unavailable. Start the API and try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function switchMode() {
+    setMode((current) => (current === 'login' ? 'signup' : 'login'))
+    setError('')
   }
 
   function goHome() {
@@ -58,7 +99,9 @@ export function Auth() {
           </div>
           <div className="relative hidden max-w-md lg:mt-8 lg:block">
             <p className="kicker text-sm text-burgundy">Partner clinics</p>
-            <h1 className="font-display mt-3 text-6xl font-bold">Sign in</h1>
+            <h1 className="font-display mt-3 text-6xl font-bold">
+              {mode === 'login' ? 'Sign in' : 'Create account'}
+            </h1>
             <p className="mt-3 max-w-sm font-medium text-muted">
               Choose patient or clinic staff.
             </p>
@@ -76,7 +119,9 @@ export function Auth() {
             <div className="md:grid md:grid-cols-2 md:items-end md:gap-8">
               <div>
                 <p className="kicker text-sm text-burgundy">Partner clinics</p>
-                <h1 className="font-display mt-2 text-4xl font-bold">Sign in</h1>
+                <h1 className="font-display mt-2 text-4xl font-bold">
+                  {mode === 'login' ? 'Sign in' : 'Create account'}
+                </h1>
                 <p className="mt-2 font-medium text-muted">
                   Choose patient or clinic staff.
                 </p>
@@ -138,6 +183,16 @@ export function Auth() {
                   autoComplete={authMethod === 'email' ? 'email' : 'tel'}
                 />
               </Field>
+              <Field id="password" label="Password" hint="At least 8 characters.">
+                <input
+                  id="password"
+                  type="password"
+                  className={inputClass}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                />
+              </Field>
               <Field id="language" label="Language">
                 <select
                   id="language"
@@ -150,9 +205,13 @@ export function Auth() {
                   ))}
                 </select>
               </Field>
-              <Button type="button" onClick={continueOn}>
-                Continue
+              {error ? <p className="text-sm font-medium text-burgundy" role="alert">{error}</p> : null}
+              <Button type="button" onClick={continueOn} disabled={loading}>
+                {loading ? 'Working…' : mode === 'login' ? 'Sign in' : 'Create account'}
               </Button>
+              <button type="button" className="text-sm font-semibold text-burgundy underline" onClick={switchMode}>
+                {mode === 'login' ? 'Need an account? Sign up' : 'Already have an account? Sign in'}
+              </button>
             </Card>
           </div>
           <p className="mt-8 text-center text-sm text-muted lg:hidden">

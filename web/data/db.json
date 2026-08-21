@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "d5569845-a730-42ff-acea-bdbd1f09e03c",
+      "email": "testing@gmail.com",
+      "role": "patient",
+      "language": "English",
+      "passwordSalt": "072024d63e08bb1c49d1c1dc5d3abfe2",
+      "passwordHash": "b66cd2e86451f47d62e6a65aad13494cf61f18a50713231dfb3a2e089fc8dbf654812ae6d71748c1e3719712b1667d0312bf7fc16a4c6499a8647bd066da3e0b",
+      "createdAt": "2026-08-21T15:04:16.548Z"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "cf15a260333917153591e095487298aa71d94d3c32a314cf739381bb78c92114",
+      "userId": "d5569845-a730-42ff-acea-bdbd1f09e03c",
+      "createdAt": "2026-08-21T15:04:16.548Z"
+    }
+  ]
+}
