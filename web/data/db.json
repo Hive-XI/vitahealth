@@ -1,0 +1,252 @@
+{
+  "users": [
+    {
+      "id": "d5569845-a730-42ff-acea-bdbd1f09e03c",
+      "email": "testing@gmail.com",
+      "role": "patient",
+      "language": "English",
+      "passwordSalt": "072024d63e08bb1c49d1c1dc5d3abfe2",
+      "passwordHash": "b66cd2e86451f47d62e6a65aad13494cf61f18a50713231dfb3a2e089fc8dbf654812ae6d71748c1e3719712b1667d0312bf7fc16a4c6499a8647bd066da3e0b",
+      "createdAt": "2026-08-21T15:04:16.548Z",
+      "patientId": "p-d5569845"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "6de2adc147bbcc91d17fe00eb6ebebfec7edebc8a5e3dd140711d73efba541fc",
+      "userId": "d5569845-a730-42ff-acea-bdbd1f09e03c",
+      "createdAt": "2026-08-21T15:44:37.632Z"
+    }
+  ],
+  "profiles": [
+    {
+      "patientId": "p-d5569845",
+      "name": "Johnson",
+      "age": "",
+      "conditions": "",
+      "medications": "",
+      "caregiver": "",
+      "language": "English",
+      "notifications": true
+    }
+  ],
+  "medications": [
+    {
+      "id": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "patientId": "p-d5569845",
+      "name": "Metformin",
+      "dosage": "500 mg",
+      "frequency": "Twice daily",
+      "reminder": "08:00",
+      "verified": false
+    },
+    {
+      "id": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "patientId": "p-d5569845",
+      "name": "Lisinopril",
+      "dosage": "10 mg",
+      "frequency": "Once daily",
+      "reminder": "08:00",
+      "verified": false
+    },
+    {
+      "id": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "patientId": "p-d5569845",
+      "name": "Amlodipine",
+      "dosage": "5 mg",
+      "frequency": "Once daily",
+      "reminder": "20:00",
+      "verified": false
+    }
+  ],
+  "medicationEvents": [
+    {
+      "id": "2a3a7d6c-ecf1-4f1c-b78c-567b0619adf0",
+      "patientId": "p-d5569845",
+      "medicationId": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "status": "taken",
+      "occurredAt": "2026-08-20T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "4bd632b5-24bd-4cbd-b07d-18e32abe8c4e",
+      "patientId": "p-d5569845",
+      "medicationId": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "status": "taken",
+      "occurredAt": "2026-08-19T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "4a8034b8-54a2-4726-a057-af32b8a8eae8",
+      "patientId": "p-d5569845",
+      "medicationId": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "status": "taken",
+      "occurredAt": "2026-08-18T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "17e1590f-3bb1-4a9b-8f5a-9e2aa5ed8fad",
+      "patientId": "p-d5569845",
+      "medicationId": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "status": "taken",
+      "occurredAt": "2026-08-16T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "257a3e90-67aa-4153-9312-79fddff185f6",
+      "patientId": "p-d5569845",
+      "medicationId": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "status": "taken",
+      "occurredAt": "2026-08-15T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "9b448059-10bd-49a8-80ef-2122d559649e",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-21T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "e1e20e98-a56e-483e-8169-4edba25c17f1",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-20T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "5b3512e8-56cf-4781-b1b4-f488fc8c733c",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-19T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "3c1b2799-538a-446d-911b-79b31c368368",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-17T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "183f25b4-5f62-48f9-a0af-6412a83ded97",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-16T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "fef9c1aa-bfd6-4169-b8d0-1d54a47f6ea5",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-15T07:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "86d11dae-6f7d-430e-b16f-00568eba7d10",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "taken",
+      "occurredAt": "2026-08-21T19:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "e107f6e2-3869-4893-84ef-d306a792e080",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "taken",
+      "occurredAt": "2026-08-20T19:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "19c1dae4-f607-4494-b3ad-d4a23fc622b2",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "taken",
+      "occurredAt": "2026-08-18T19:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "ab15babe-e1e2-4a54-bf7d-868221df940a",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "taken",
+      "occurredAt": "2026-08-17T19:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "a669deb3-2385-416c-a61d-2b25581a6064",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "taken",
+      "occurredAt": "2026-08-16T19:00:00.000Z",
+      "source": "system"
+    },
+    {
+      "id": "b26b6b46-8183-46b9-a560-5b93e76f7645",
+      "patientId": "p-d5569845",
+      "medicationId": "a7653b5e-6057-42e5-af7f-bf21ed783b3e",
+      "status": "taken",
+      "occurredAt": "2026-08-21T15:50:16.893Z",
+      "source": "patient"
+    },
+    {
+      "id": "6d12884d-0376-4312-b09d-e12a1850b246",
+      "patientId": "p-d5569845",
+      "medicationId": "26e5e568-f6e9-4eec-8e30-52a7c8f67084",
+      "status": "skipped",
+      "occurredAt": "2026-08-21T15:50:18.551Z",
+      "source": "patient"
+    },
+    {
+      "id": "37ef531f-12ea-4938-8b3a-222a04d67d61",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "taken",
+      "occurredAt": "2026-08-21T15:50:20.876Z",
+      "source": "patient"
+    },
+    {
+      "id": "345ff94d-ce34-4c2c-b500-fc691eced82a",
+      "patientId": "p-d5569845",
+      "medicationId": "bf6023df-dbcf-471f-a05c-32303a00da58",
+      "status": "skipped",
+      "occurredAt": "2026-08-21T15:50:23.174Z",
+      "source": "patient"
+    }
+  ],
+  "labs": [],
+  "messages": [
+    {
+      "id": "aa3cfdaa-2ef5-43fd-896a-b7f2a9c49875",
+      "patientId": "p-d5569845",
+      "from": "vita",
+      "text": "I'm Vita, your companion between visits. Tell me how you feel, or use the microphone.",
+      "createdAt": "2026-08-21T15:31:20.877Z"
+    },
+    {
+      "id": "10c360f6-b83b-4205-8e46-f4382f66680c",
+      "patientId": "p-d5569845",
+      "from": "user",
+      "text": "I am feeling pain in my stomach",
+      "createdAt": "2026-08-21T15:36:57.877Z"
+    },
+    {
+      "id": "c1da43e3-5d45-4978-98b8-1228a004cb00",
+      "patientId": "p-d5569845",
+      "from": "vita",
+      "text": "I'm sorry to hear you're feeling pain in your stomach. As a health companion, I can't diagnose what's causing it, but gathering more details can be helpful.\n\nCould you tell me a little more about the pain?\n*   Where exactly is the pain located in your stomach area?\n*   How would you describe the pain (e.g., sharp, dull, cramping, burning)?\n*   When did it start, and has it been constant or does it come and go?\n*   Are you experiencing any other symptoms, like fever, nausea, vomiting, diarrhea, constipation, or changes in your appetite?\n\nIf the pain is sudden and very severe, or if you also have trouble breathing, severe vomiting, or are feeling faint, please contact emergency services immediately.\n\nFor a proper check-up and advice tailored to you, I would recommend visiting our clinic. They can assess your symptoms directly.",
+      "createdAt": "2026-08-21T15:37:01.768Z"
+    }
+  ],
+  "escalations": [],
+  "notes": [],
+  "appointments": [],
+  "patients": []
+}

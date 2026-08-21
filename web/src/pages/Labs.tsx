@@ -34,11 +34,12 @@ export function Labs() {
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-6">
       <h1 className="font-display text-4xl font-bold">Lab results</h1>
       <p className="text-sm font-medium text-white/90">
         Use the range on your report. Out of range is flagged for clinic review.
       </p>
+      <div className="grid gap-6 lg:grid-cols-[minmax(280px,0.8fr)_minmax(0,1.2fr)] lg:items-start">
       <form onSubmit={save}>
         <Card className="grid gap-3">
           <Field id="lab-name" label="Test name">
@@ -80,6 +81,7 @@ export function Labs() {
           <Button type="submit">Save result</Button>
         </Card>
       </form>
+      <div className="grid gap-4">
       {labs.map((lab) => (
         <Card key={lab.id} className={lab.flagged ? 'ring-burgundy/40' : ''}>
           <div className="flex items-start justify-between gap-3">
@@ -107,6 +109,8 @@ export function Labs() {
           ) : null}
         </Card>
       ))}
+      </div>
+      </div>
     </div>
   )
 }

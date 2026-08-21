@@ -134,7 +134,7 @@ h3,
 }
 
 :focus-visible {
-  outline: 3px solid #fff;
+  outline: 3px solid var(--color-burgundy);
   outline-offset: 3px;
 }
 
