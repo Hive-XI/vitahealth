@@ -45,7 +45,7 @@ export function AddMed() {
             className={inputClass}
             value={dosage}
             onChange={(event) => setDosage(event.target.value)}
-            placeholder="10 mg"
+            placeholder="Dosage"
           />
         </Field>
         <Field id="frequency" label="Frequency">

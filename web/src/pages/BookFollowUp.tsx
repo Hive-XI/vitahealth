@@ -3,22 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Card, Field, inputClass } from '../components/ui'
 import { useVita } from '../context'
 
-const clinics = [
-  'St. Mary’s District Hospital',
-  'Riverside Family Clinic',
-  'Harbour Community Health Centre',
-]
-
 export function BookFollowUp() {
   const navigate = useNavigate()
-  const [clinic, setClinic] = useState(clinics[0])
-  const [when, setWhen] = useState('Tomorrow morning')
+  const [clinic, setClinic] = useState('')
+  const [when, setWhen] = useState('')
   const [sent, setSent] = useState(false)
   const { requestAppointment } = useVita()
 
   async function confirm(event: FormEvent) {
     event.preventDefault()
-    await requestAppointment(clinic, when)
+    if (!clinic.trim() || !when.trim()) return
+    await requestAppointment(clinic.trim(), when.trim())
     setSent(true)
     window.setTimeout(() => navigate('/app'), 1200)
   }
@@ -31,28 +26,24 @@ export function BookFollowUp() {
       </p>
       <Card className="grid gap-4">
         <Field id="clinic" label="Preferred clinic">
-          <select
+          <input
             id="clinic"
             className={inputClass}
             value={clinic}
             onChange={(event) => setClinic(event.target.value)}
-          >
-            {clinics.map((item) => (
-              <option key={item}>{item}</option>
-            ))}
-          </select>
+            placeholder="Your clinic name"
+            required
+          />
         </Field>
         <Field id="when" label="Preferred time">
-          <select
+          <input
             id="when"
             className={inputClass}
             value={when}
             onChange={(event) => setWhen(event.target.value)}
-          >
-            <option>Tomorrow morning</option>
-            <option>Tomorrow afternoon</option>
-            <option>This week</option>
-          </select>
+            placeholder="e.g. Tomorrow morning"
+            required
+          />
         </Field>
         <Button type="submit">Confirm request</Button>
         {sent ? (

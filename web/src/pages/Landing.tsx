@@ -142,19 +142,14 @@ export function Landing() {
             </div>
             <Card className="bg-white/95 text-ink">
               <p className="text-sm font-semibold text-muted">Escalation queue</p>
-              <ul className="mt-4 grid gap-3">
-                <li className="flex justify-between gap-3 border-b border-line pb-3">
-                  <span>Amara Okafor · flagged HbA1c</span>
-                  <span className="font-semibold text-burgundy">High</span>
-                </li>
-                <li className="flex justify-between gap-3 border-b border-line pb-3">
-                  <span>Fatima Diallo · missed inhaler</span>
-                  <span className="font-semibold text-burgundy">High</span>
-                </li>
-                <li className="flex justify-between gap-3">
-                  <span>Joseph Adeyemi · lab review</span>
-                  <span className="font-semibold text-navy">Medium</span>
-                </li>
+              <p className="mt-4 text-sm text-muted">
+                After patients check in, adherence gaps and flagged labs appear
+                here so your team can act first.
+              </p>
+              <ul className="mt-4 grid gap-2 text-sm text-muted">
+                <li className="border-b border-line pb-2">Missed doses</li>
+                <li className="border-b border-line pb-2">Flagged labs</li>
+                <li>Symptom escalations</li>
               </ul>
             </Card>
           </div>

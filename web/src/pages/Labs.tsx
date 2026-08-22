@@ -48,7 +48,7 @@ export function Labs() {
               className={inputClass}
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="HbA1c"
+              placeholder="Lab name"
             />
           </Field>
           <div className="grid grid-cols-2 gap-3">
@@ -75,7 +75,7 @@ export function Labs() {
               className={inputClass}
               value={range}
               onChange={(event) => setRange(event.target.value)}
-              placeholder="Below 7.0"
+              placeholder="Range on your report"
             />
           </Field>
           <Button type="submit">Save result</Button>

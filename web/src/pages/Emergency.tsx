@@ -27,9 +27,9 @@ export function Emergency() {
           Approved next steps
         </h2>
         <ul className="mt-3 list-disc space-y-2 pl-5 text-muted">
-          <li>St. Mary’s District Hospital · 1.8 km</li>
-          <li>Clinic on-call · +234 800 111 2222</li>
-          <li>Caregiver alert sent if invited</li>
+          <li>Call 112 or your nearest emergency department</li>
+          <li>Contact your clinic’s on-call number</li>
+          <li>Alert your caregiver if one is invited</li>
         </ul>
       </Card>
       <ButtonLink to="/app" variant="secondary">

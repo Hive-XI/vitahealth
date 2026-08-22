@@ -40,7 +40,6 @@ export function SymptomChat() {
   function useVoice() {
     setListening(true)
     window.setTimeout(() => {
-      setDraft('I have had a headache since this morning')
       setListening(false)
     }, 700)
   }

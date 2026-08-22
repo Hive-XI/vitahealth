@@ -84,7 +84,7 @@ function vitaReply(text: string): string {
   if (lower.includes('sugar') || lower.includes('dizzy') || lower.includes('glucose')) {
     return (
       stamp +
-      'Tier: follow your clinic protocol.\n\n1. Last glucose reading?\n2. Eaten and taken Metformin as scheduled?\n3. Vomiting, confusion, or fainting?\n\nConfused or faint → urgent care. Otherwise log the reading in Labs.'
+      'Tier: follow your clinic protocol.\n\n1. Last glucose reading?\n2. Eaten and taken your usual medicines as scheduled?\n3. Vomiting, confusion, or fainting?\n\nConfused or faint → urgent care. Otherwise log the reading in Labs.'
     )
   }
   return (
@@ -188,7 +188,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
       timeline: [
         ...messages.map((message) => ({
           id: message.id,
-          patientId: message.patientId || 'p1',
+          patientId: message.patientId || '',
           type: message.from === 'user' ? 'symptom' as const : 'ai' as const,
           title: message.from === 'user' ? 'Symptom reported' : 'Vita guidance',
           description: message.text,
@@ -204,7 +204,7 @@ export function VitaProvider({ children }: { children: ReactNode }) {
         })),
         ...labs.map((lab) => ({
           id: lab.id,
-          patientId: lab.patientId || 'p1',
+          patientId: lab.patientId || '',
           type: 'lab' as const,
           title: `${lab.name} result`,
           description: `${lab.value} ${lab.unit}`,

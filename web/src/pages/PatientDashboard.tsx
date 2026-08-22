@@ -79,7 +79,7 @@ export function PatientDashboard() {
       {flagged.length > 0 ? (
         <Card className="ring-burgundy/30">
           <h2 className="font-display text-lg font-semibold text-burgundy">
-            HbA1c flagged
+            {flagged[0].name} flagged
           </h2>
           <p className="mt-2 text-sm text-muted">
             {flagged[0].value}
