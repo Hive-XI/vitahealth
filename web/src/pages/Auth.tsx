@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { BrandAtmosphere, PlusField } from '../components/BrandStage'
@@ -7,12 +7,11 @@ import { Logo } from '../components/Logo'
 import { Button, Card, Field, inputClass } from '../components/ui'
 import { useVita } from '../context'
 import { appLanguages } from '../languages'
+import type { Role } from '../types'
 
 export function Auth() {
   const navigate = useNavigate()
   const {
-    role,
-    setRole,
     language,
     setLanguage,
     identifier,
@@ -22,10 +21,19 @@ export function Auth() {
     logout,
     refreshWorkspace,
   } = useVita()
+  const [selectedRole, setSelectedRole] = useState<Role>('patient')
   const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    // Clear any previous clinic/patient session so the role toggle is not sticky.
+    logout()
+    setSelectedRole('patient')
+    // Run once when opening the sign-in screen.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   async function continueOn() {
     setError('')
@@ -37,23 +45,31 @@ export function Auth() {
         body: JSON.stringify({
           email: identifier,
           password,
-          role,
+          role: selectedRole,
           language,
         }),
       })
       const result = (await response.json()) as {
         token?: string
         error?: string
-        user?: { role: 'patient' | 'clinic'; language: string; email: string }
+        user?: { role: Role; language: string; email: string }
       }
       if (!response.ok || !result.token || !result.user) {
         setError(result.error ?? 'Unable to authenticate. Try again.')
         return
       }
+      if (mode === 'login' && result.user.role !== selectedRole) {
+        window.localStorage.removeItem('vita.token')
+        setError(
+          result.user.role === 'clinic'
+            ? 'This email is a clinic staff account. Choose Clinic staff to sign in, or use a different email for a patient account.'
+            : 'This email is a patient account. Choose Patient to sign in, or use a different email for clinic staff.',
+        )
+        return
+      }
       window.localStorage.setItem('vita.token', result.token)
       setLanguage(result.user.language)
       setIdentifier(result.user.email)
-      setRole(result.user.role)
       await refreshWorkspace()
       if (result.user.role === 'clinic') navigate('/clinic')
       else navigate(mode === 'signup' ? '/consent' : '/app')
@@ -101,14 +117,14 @@ export function Auth() {
           </div>
           <div className="relative hidden max-w-md lg:mt-8 lg:block">
             <p className="kicker text-sm text-burgundy">Partner clinics</p>
-            <h1 className="font-display mt-3 text-6xl font-bold">
-              {mode === 'login' ? 'Sign in' : 'Create account'}
+            <h1 className="mt-3 font-display text-4xl font-bold text-balance lg:text-5xl">
+              Care between visits
             </h1>
-            <p className="mt-3 max-w-sm font-medium text-muted">
+            <p className="mt-4 text-sm font-medium text-muted">
               Choose patient or clinic staff.
             </p>
           </div>
-          <div className="relative mt-8 hidden min-h-0 flex-1 overflow-hidden rounded-3xl lg:block">
+          <div className="relative mt-6 hidden flex-1 lg:mt-10 lg:block">
             <ClinicianPhoto className="h-full min-h-80 w-full" />
           </div>
           <p className="relative mt-6 hidden text-sm text-muted lg:block">
@@ -116,19 +132,19 @@ export function Auth() {
           </p>
         </aside>
 
-        <section className="flex flex-col justify-center bg-[#f4f1ea] px-4 pb-10 pt-2 sm:px-6 lg:bg-transparent lg:px-12 lg:py-12">
+        <section className="flex flex-col justify-center px-4 py-8 sm:px-6 lg:px-12 lg:py-12">
           <div className="lg:hidden">
-            <div className="md:grid md:grid-cols-2 md:items-end md:gap-8">
-              <div>
-                <p className="kicker text-sm text-burgundy">Partner clinics</p>
-                <h1 className="font-display mt-2 text-4xl font-bold">
-                  {mode === 'login' ? 'Sign in' : 'Create account'}
-                </h1>
-                <p className="mt-2 font-medium text-muted">
-                  Choose patient or clinic staff.
-                </p>
-              </div>
-              <ClinicianPhoto className="mx-auto mt-5 aspect-[4/5] w-full max-w-[17rem] rounded-2xl md:mx-0 md:mt-0 md:aspect-auto md:h-[26rem] md:max-w-none md:rounded-3xl" />
+            <div className="max-w-md">
+              <p className="kicker text-sm text-burgundy">Partner clinics</p>
+              <h1 className="mt-3 font-display text-3xl font-bold text-balance">
+                Care between visits
+              </h1>
+              <p className="mt-3 text-sm font-medium text-muted">
+                Choose patient or clinic staff.
+              </p>
+            </div>
+            <div className="mt-5">
+              <ClinicianPhoto className="mx-auto aspect-[4/5] w-full max-w-[17rem] rounded-2xl md:mx-0 md:aspect-auto md:h-[26rem] md:max-w-none md:rounded-3xl" />
             </div>
           </div>
 
@@ -141,9 +157,12 @@ export function Auth() {
               <button
                 key={option}
                 type="button"
-                onClick={() => setRole(option)}
+                onClick={() => {
+                  setSelectedRole(option)
+                  setError('')
+                }}
                 className={`min-h-16 cursor-pointer rounded-2xl border px-4 text-left font-semibold transition-colors duration-200 lg:min-h-20 ${
-                  role === option
+                  selectedRole === option
                     ? 'border-burgundy bg-burgundy text-white'
                     : 'border-navy/15 bg-white text-navy hover:bg-navy/5 lg:border-white/25 lg:bg-white/10 lg:text-white lg:hover:bg-white/15'
                 }`}
@@ -207,12 +226,26 @@ export function Auth() {
                   ))}
                 </select>
               </Field>
-              {error ? <p className="text-sm font-medium text-burgundy" role="alert">{error}</p> : null}
+              {error ? (
+                <p className="text-sm font-medium text-burgundy" role="alert">
+                  {error}
+                </p>
+              ) : null}
               <Button type="button" onClick={continueOn} disabled={loading}>
-                {loading ? 'Working…' : mode === 'login' ? 'Sign in' : 'Create account'}
+                {loading
+                  ? 'Working…'
+                  : mode === 'login'
+                    ? 'Sign in'
+                    : 'Create account'}
               </Button>
-              <button type="button" className="text-sm font-semibold text-burgundy underline" onClick={switchMode}>
-                {mode === 'login' ? 'Need an account? Sign up' : 'Already have an account? Sign in'}
+              <button
+                type="button"
+                className="text-sm font-semibold text-burgundy underline"
+                onClick={switchMode}
+              >
+                {mode === 'login'
+                  ? 'Need an account? Sign up'
+                  : 'Already have an account? Sign in'}
               </button>
             </Card>
           </div>
